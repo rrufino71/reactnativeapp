@@ -27,19 +27,23 @@ export default function LoginScreen() {
 
     if (!form.email.trim()) {
       //errors.email = "El E-mail es obligatorio";
+      setTipoMensaje(1);
       setMensaje("El E-mail es obligatorio");
       isError = true;
     } else if (!regxCorreo.test(form.email)) {
       //errors.email = "El E-mail no parece tener un formato valido";
+      setTipoMensaje(1);
       setMensaje("El E-mail no parece tener un formato valido");
       isError = true;
     }
     if (!form.password.trim() && !isError) {
       //errors.password = "La password no puede estar vacio";
-      setMensaje("La password no puede estar vacio");
+      setTipoMensaje(1);
+      setMensaje("La password no puede estar vacia");
       isError = true;
     } else if (!regxPassword.test(form.password) && !isError) {
       //errors.password = "La password  debe tener entre 8 y 20 digitos";
+      setTipoMensaje(1);
       setMensaje("La password  debe tener entre 8 y 20 digitos");
       isError = true;
     }
@@ -56,6 +60,8 @@ export default function LoginScreen() {
     setIsAuthenticated,
     usuarioNombre,
     setUsuarioNombre,
+    tipoMensaje,
+    setTipoMensaje,
   } = useContext(AuthContext);
 
   const onSubmit = async () => {
@@ -68,6 +74,7 @@ export default function LoginScreen() {
       if (result.status) {
         //Alert.alert(`Bienvenido ${result.message.name}, logueo exitoso`);
         //console.log("ok:", result.message.name);
+        setTipoMensaje(2);
         setMensaje(result.message.name);
         setIsAuthenticated(true);
         setUsuarioNombre(result.message.name);
@@ -75,6 +82,7 @@ export default function LoginScreen() {
       } else {
         //Alert.alert(`Bienvenido ${result.message}, logueo fail`);
         //console.log("error:", result.message);
+        setTipoMensaje(1);
         setMensaje(result.message);
       }
     }

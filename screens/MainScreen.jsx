@@ -13,9 +13,9 @@ export default function MainScreen({ navigation }) {
           paddingBottom: insets.bottom, // Aplica el margen inferior
           paddingLeft: insets.left, // Aplica el margen izquierdo
           paddingRight: insets.right, // Aplica el margen derecho
+          backgroundColor: "rgba(175, 176, 227, 0.3)",
         },
       ]}
-      className="bg-blue-400"
     >
       <Button title="Go to About" onPress={() => navigation.replace("About")} />
       {/* Texto que también navega a DetailsScreen */}

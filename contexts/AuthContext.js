@@ -8,6 +8,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [mensaje, setMensaje] = useState(null);
+  const [tipoMensaje, setTipoMensaje] = useState(null);
   const [usuarioNombre, setUsuarioNombre] = useState(null);
 
   // Función para iniciar sesión (puedes modificarla según tus necesidades)
@@ -42,6 +43,8 @@ export const AuthProvider = ({ children }) => {
         usuarioNombre,
         setUsuarioNombre,
         setIsAuthenticated,
+        tipoMensaje,
+        setTipoMensaje,
       }}
     >
       {children}
