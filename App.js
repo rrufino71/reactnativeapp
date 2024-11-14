@@ -16,6 +16,7 @@ import ContactoScreen from "./screens/ContactoScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import CustomTabBar from "./components/CustomBar";
 import CustomStatusBar from "./components/CustomStatusBar";
+import RegisterScreen from "./screens/RegisterScreen";
 import { AuthProvider } from "./contexts/AuthContext";
 
 enableScreens();
@@ -57,6 +58,11 @@ export default function App() {
             <Stack.Screen
               name="Settings"
               component={SettingsScreen}
+              options={{ headerShown: false, gestureEnabled: true }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={RegisterScreen}
               options={{ headerShown: false, gestureEnabled: true }}
             />
           </Stack.Navigator>

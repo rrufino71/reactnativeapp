@@ -134,7 +134,7 @@ export default function LoginScreen() {
           style={{
             borderWidth: 1,
             padding: 15,
-            marginBottom: 12,
+            marginBottom: 0,
             marginHorizontal: 10,
             borderRadius: 10,
             backgroundColor: "white",
@@ -146,6 +146,21 @@ export default function LoginScreen() {
           onChangeText={(value) => handleChange("password", value)}
         />
         {errors.password && <Text style={styles.error}>{errors.password}</Text>}
+      </View>
+      <View
+        style={{
+          height: 50,
+          justifyContent: "left",
+          borderBlockColor: "grey",
+          paddingHorizontal: 15,
+        }}
+      >
+        <Text
+          style={{ color: "blue", marginTop: 20 }}
+          onPress={() => navigation.navigate("Register")}
+        >
+          Tenes cuenta ?
+        </Text>
       </View>
       <View
         style={{
