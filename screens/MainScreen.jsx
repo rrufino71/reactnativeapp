@@ -31,12 +31,12 @@ export default function MainScreen({ navigation }) {
       >
         Contacto
       </Text>
-      <Text
+      {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => navigation.navigate("Login")}
       >
         Login
-      </Text>
+      </Text> */}
     </View>
   );
 }

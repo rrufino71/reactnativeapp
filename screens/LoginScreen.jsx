@@ -26,18 +26,21 @@ export default function LoginScreen() {
     let regxPassword = PASS_VALIDATION;
 
     if (!form.email.trim()) {
-      errors.email = "El E-mail es obligatorio";
+      //errors.email = "El E-mail es obligatorio";
+      setMensaje("El E-mail es obligatorio");
       isError = true;
     } else if (!regxCorreo.test(form.email)) {
-      errors.email = "El E-mail no parece tener un formato valido";
+      //errors.email = "El E-mail no parece tener un formato valido";
+      setMensaje("El E-mail no parece tener un formato valido");
       isError = true;
     }
-
-    if (!form.password.trim()) {
-      errors.password = "La password no puede estar vacio";
+    if (!form.password.trim() && !isError) {
+      //errors.password = "La password no puede estar vacio";
+      setMensaje("La password no puede estar vacio");
       isError = true;
-    } else if (!regxPassword.test(form.password)) {
-      errors.password = "La password  debe tener entre 8 y 20 digitos";
+    } else if (!regxPassword.test(form.password) && !isError) {
+      //errors.password = "La password  debe tener entre 8 y 20 digitos";
+      setMensaje("La password  debe tener entre 8 y 20 digitos");
       isError = true;
     }
     setErrors(errors);
@@ -64,14 +67,14 @@ export default function LoginScreen() {
       setResponse(result);
       if (result.status) {
         //Alert.alert(`Bienvenido ${result.message.name}, logueo exitoso`);
-        console.log("ok:", result.message.name);
+        //console.log("ok:", result.message.name);
         setMensaje(result.message.name);
         setIsAuthenticated(true);
         setUsuarioNombre(result.message.name);
         navigation.replace("Home");
       } else {
         //Alert.alert(`Bienvenido ${result.message}, logueo fail`);
-        console.log("error:", result.message);
+        //console.log("error:", result.message);
         setMensaje(result.message);
       }
     }
@@ -79,13 +82,36 @@ export default function LoginScreen() {
 
   return (
     <>
-      <Text className="mb-10 text-center text-xl font-bold  mt-24">
-        Formulario de Login{" "}
-        {isAuthenticated ? "Cerrar sesión" : "Iniciar sesión"}
-      </Text>
-      <View style={styles.container}>
+      <View
+        style={{
+          justifyContent: "center",
+          height: 100,
+          marginTop: 40,
+        }}
+      >
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: 32,
+          }}
+        >
+          Login
+        </Text>
+      </View>
+
+      <View style={{ padding: 5 }}>
+        <Text style={{ margin: 10, color: "grey" }}>Correo Electronico</Text>
         <TextInput
-          style={styles.input}
+          style={{
+            borderWidth: 1,
+            padding: 15,
+            marginBottom: 5,
+            marginHorizontal: 10,
+            borderRadius: 10,
+            backgroundColor: "white",
+            borderColor: "grey",
+          }}
           label="e-mail"
           keyboardType="emailAddress"
           placeholder="E-Mail"
@@ -94,9 +120,18 @@ export default function LoginScreen() {
         ></TextInput>
         {errors.email && <Text style={styles.error}>{errors.email}</Text>}
       </View>
-      <View style={styles.container}>
+      <View style={{ padding: 5 }}>
+        <Text style={{ margin: 10, color: "grey" }}>Password</Text>
         <TextInput
-          style={styles.input}
+          style={{
+            borderWidth: 1,
+            padding: 15,
+            marginBottom: 12,
+            marginHorizontal: 10,
+            borderRadius: 10,
+            backgroundColor: "white",
+            borderColor: "grey",
+          }}
           placeholder="Password"
           secureTextEntry
           value={form.password}
@@ -104,8 +139,22 @@ export default function LoginScreen() {
         />
         {errors.password && <Text style={styles.error}>{errors.password}</Text>}
       </View>
-      <View className="mt-10 p-10 b-1">
-        <Button title="Login" onPress={onSubmit} />
+      <View
+        style={{
+          height: 100,
+          justifyContent: "center",
+          height: 100,
+          marginTop: 10,
+          paddingTop: 30,
+          paddingHorizontal: 60,
+          borderBlockColor: "grey",
+        }}
+      >
+        <Button
+          title="Login"
+          onPress={onSubmit}
+          style={{ borderBottomEndRadius: 10 }}
+        />
       </View>
       {/* {response && (
           <Text style={styles.error}>
@@ -120,9 +169,9 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 5,
-    marginTop: 5,
     justifyContent: "center",
     alignContent: "center",
+    alignItems: "center",
   },
   label: {
     fontSize: 16,
@@ -141,5 +190,8 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginHorizontal: 10,
     borderRadius: 5,
+  },
+  title: {
+    fontSize: 32,
   },
 });

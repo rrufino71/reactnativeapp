@@ -26,10 +26,10 @@ export const AuthProvider = ({ children }) => {
     }
   }, [mensaje]); // Se ejecuta solo una vez cuando el componente se monta
 
-  useEffect(() => {
-    console.log("isAuthenticated:", isAuthenticated);
-    console.log("usuarioNombre:", usuarioNombre);
-  }, [usuarioNombre, isAuthenticated]);
+  // useEffect(() => {
+  //   console.log("isAuthenticated:", isAuthenticated);
+  //   console.log("usuarioNombre:", usuarioNombre);
+  // }, [usuarioNombre, isAuthenticated]);
 
   return (
     <AuthContext.Provider

@@ -44,7 +44,7 @@ export default function CustomTabBar() {
             }}
           >
             <SignInIcon />
-            <Text style={styles.tabLabel}>LogOut {usuarioNombre}</Text>
+            <Text style={styles.tabLabel}>{usuarioNombre}</Text>
           </TouchableOpacity>
         </>
       )}
