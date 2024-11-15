@@ -17,7 +17,7 @@ export default function CustomTabBar() {
   } = useContext(AuthContext);
 
   return (
-    <View style={styles.tabContainer}>
+    <View style={styles.tabContainer} className="bg-customColor5">
       <TouchableOpacity
         style={styles.tabButton}
         onPress={() => navigation.navigate("Home")}
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "white",
+    //backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
