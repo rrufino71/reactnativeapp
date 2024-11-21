@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Keyboard } from "react-native";
+import { useState, useEffect } from "react";
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -24,6 +25,30 @@ enableScreens();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  useEffect(() => {
+    // Suscribirse a los eventos del teclado
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true); // El teclado está visible
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false); // El teclado se ocultó
+      }
+    );
+
+    // Limpiar los listeners al desmontar
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   return (
     <AuthProvider>
       <SafeAreaProvider>
@@ -72,7 +97,7 @@ export default function App() {
               options={{ headerShown: false, gestureEnabled: true }}
             />
           </Stack.Navigator>
-          <CustomTabBar />
+          {!isKeyboardVisible && <CustomTabBar />}
         </NavigationContainer>
       </SafeAreaProvider>
     </AuthProvider>
