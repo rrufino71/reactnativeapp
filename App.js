@@ -26,6 +26,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
   useEffect(() => {
     // Suscribirse a los eventos del teclado
     const keyboardDidShowListener = Keyboard.addListener(

@@ -23,7 +23,12 @@ export async function getLogin(datos) {
     if (respuesta.status) {
       //response = await result.json(); // Convierte la respuesta a JSON
       //  console.log("logueado");
-      response = { status: respuesta.status, message: respuesta.data };
+      response = {
+        status: respuesta.status,
+        message: respuesta.message,
+        data: respuesta.data,
+        token: respuesta.token,
+      };
     } else {
       // Captura código y texto de estado para los errores
       let errorText = "";

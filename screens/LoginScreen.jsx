@@ -81,17 +81,21 @@ export default function LoginScreen() {
     const { email, password } = form;
     if (!validation) {
       const result = await getLogin({ email: email, password: password });
+
+      console.log(result);
+
       setResponse(result);
+
       if (result.status) {
         //Alert.alert(`Bienvenido ${result.message.name}, logueo exitoso`);
-        //console.log("ok:", result.message.name);
+
         setTipoMensaje(2);
-        setMensaje(result.message.name);
+        setMensaje(result.data.name);
         setIsAuthenticated(true);
-        setUsuarioNombre(result.message.name);
+        setUsuarioNombre(result.data.name);
         navigation.replace("Home");
       } else {
-        //Alert.alert(`Bienvenido ${result.message}, logueo fail`);
+        Alert.alert(`Bienvenido ${result.message}, logueo fail`);
         //console.log("error:", result.message);
         setTipoMensaje(1);
         setMensaje(result.message);
