@@ -1,4 +1,13 @@
-import { Text, TextInput, View, StyleSheet, Button, Alert } from "react-native";
+import {
+  Text,
+  TextInput,
+  View,
+  StyleSheet,
+  Button,
+  Alert,
+  TouchableOpacity,
+  Icon,
+} from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { useForm } from "../hooks/useForm";
 import { MAIL_VALIDATION, PASS_VALIDATION } from "../services/config";
@@ -6,6 +15,7 @@ import { getLogin } from "../libs/auth";
 import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
+import { Visibility, VisibilityOff } from "../components/Icons";
 
 export default function LoginScreen() {
   const initialData = {
@@ -52,6 +62,7 @@ export default function LoginScreen() {
   };
 
   const [response, setResponse] = useState(null);
+  const [ocultaPass, setOcultaPass] = useState(true);
 
   const {
     isAuthenticated,
@@ -88,6 +99,10 @@ export default function LoginScreen() {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setOcultaPass(!ocultaPass);
+  };
+
   return (
     <>
       <View
@@ -107,19 +122,13 @@ export default function LoginScreen() {
           Login
         </Text>
       </View>
+      <View>
+        <Text style={styles.label}>Correo Electronico</Text>
+      </View>
 
-      <View style={{ padding: 5 }}>
-        <Text style={{ margin: 10, color: "grey" }}>Correo Electronico</Text>
+      <View style={styles.inputContainer}>
         <TextInput
-          style={{
-            borderWidth: 1,
-            padding: 15,
-            marginBottom: 5,
-            marginHorizontal: 10,
-            borderRadius: 10,
-            backgroundColor: "white",
-            borderColor: "grey",
-          }}
+          style={styles.input}
           label="e-mail"
           keyboardType="emailAddress"
           placeholder="E-Mail"
@@ -128,23 +137,23 @@ export default function LoginScreen() {
         ></TextInput>
         {errors.email && <Text style={styles.error}>{errors.email}</Text>}
       </View>
-      <View style={{ padding: 5 }}>
-        <Text style={{ margin: 10, color: "grey" }}>Password</Text>
+      <View>
+        <Text style={styles.label}>Password</Text>
+      </View>
+      <View style={styles.inputContainer}>
         <TextInput
-          style={{
-            borderWidth: 1,
-            padding: 15,
-            marginBottom: 0,
-            marginHorizontal: 10,
-            borderRadius: 10,
-            backgroundColor: "white",
-            borderColor: "grey",
-          }}
+          style={styles.input}
           placeholder="Password"
-          secureTextEntry
+          secureTextEntry={ocultaPass}
           value={form.password}
           onChangeText={(value) => handleChange("password", value)}
         />
+        <TouchableOpacity
+          onPress={togglePasswordVisibility}
+          style={{ justifyContent: "center", width: 24 }}
+        >
+          {ocultaPass ? <Visibility /> : <VisibilityOff />}
+        </TouchableOpacity>
         {errors.password && <Text style={styles.error}>{errors.password}</Text>}
       </View>
       <View
@@ -156,7 +165,8 @@ export default function LoginScreen() {
         }}
       >
         <Text
-          style={{ color: "blue", marginTop: 20 }}
+          style={{ color: "blue", marginTop: 10, fontSize: 13 }}
+          className="text-center"
           onPress={() => navigation.navigate("Register")}
         >
           Tenes cuenta ?
@@ -198,15 +208,18 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginBottom: 8,
+    margin: 20,
+    color: "grey",
   },
   input: {
-    borderWidth: 1,
-    padding: 15,
-    marginBottom: 12,
-    marginHorizontal: 10,
-    borderRadius: 5,
-    backgroundColor: "white",
+    flex: 1, // Ocupa todo el espacio restante
+    fontSize: 16,
+    paddingVertical: 0,
+  },
+  iconButton: {
+    marginLeft: 10, // Espacio entre el ícono y el input
+    justifyContent: "center",
+    alignItems: "center",
   },
   error: {
     color: "red",
@@ -216,5 +229,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+  },
+
+  inputContainer: {
+    flexDirection: "row", // Alinea ícono y TextInput
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 15,
+    height: 50, // Fija el mismo alto para ambos contenedores
+    backgroundColor: "white",
+    marginHorizontal: 20,
   },
 });

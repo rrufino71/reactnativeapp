@@ -19,3 +19,11 @@ export const SettingsIcon = (props) => (
 export const ProfileIcon = (props) => (
   <MaterialIcons name="manage-accounts" size={24} color="black" {...props} />
 );
+
+export const Visibility = (props) => (
+  <MaterialIcons name="visibility" size={24} color="black" {...props} />
+);
+
+export const VisibilityOff = (props) => (
+  <MaterialIcons name="visibility-off" size={24} color="black" {...props} />
+);
