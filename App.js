@@ -14,6 +14,7 @@ import AboutScreen from "./screens/AboutScreen";
 import MainScreen from "./screens/MainScreen";
 import ContactoScreen from "./screens/ContactoScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import CustomTabBar from "./components/CustomBar";
 import CustomStatusBar from "./components/CustomStatusBar";
 import RegisterScreen from "./screens/RegisterScreen";
@@ -63,6 +64,11 @@ export default function App() {
             <Stack.Screen
               name="Register"
               component={RegisterScreen}
+              options={{ headerShown: false, gestureEnabled: true }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={ProfileScreen}
               options={{ headerShown: false, gestureEnabled: true }}
             />
           </Stack.Navigator>

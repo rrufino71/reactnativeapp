@@ -39,8 +39,9 @@ export default function CustomTabBar() {
           <TouchableOpacity
             style={styles.tabButton}
             onPress={() => {
-              setIsAuthenticated(false);
-              setUsuarioNombre(null);
+              //setIsAuthenticated(false);
+              //setUsuarioNombre(null);
+              navigation.navigate("Profile");
             }}
           >
             <SignInIcon />
