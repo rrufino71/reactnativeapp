@@ -138,10 +138,10 @@ export default function ProfileScreen() {
     }
   };
 
-  const formattedDate =
-    date instanceof Date && !isNaN(date)
-      ? date.toISOString().split("T")[0] // Formato yyyy-mm-dd si es una fecha válida
-      : "";
+  const formattedDate = usuario.cumple.toISOString().split("T")[0]
+    // date instanceof Date && !isNaN(date)
+    //   ? date.toISOString().split("T")[0] // Formato yyyy-mm-dd si es una fecha válida
+    //   : "";
 
   return (
     <>
