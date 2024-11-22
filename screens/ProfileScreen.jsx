@@ -15,7 +15,7 @@ import {
 import { useState, useEffect, useContext } from "react";
 import { useForm } from "../hooks/useForm";
 import { MAIL_VALIDATION, PASS_VALIDATION } from "../services/config";
-import { registerUser } from "../libs/auth";
+import { updateUser } from "../libs/auth";
 import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
@@ -46,9 +46,6 @@ export default function ProfileScreen() {
 
   const navigation = useNavigation();
 
-  const { form, errors, loading, setLoading, setErrors, handleChange } =
-    useForm(initialData, onValidate);
-
   const onValidate = (form) => {
     let isError = false;
     let errors = {};
@@ -77,6 +74,9 @@ export default function ProfileScreen() {
     return isError ? errors : null;
   };
 
+  const { form, errors, loading, setLoading, setErrors, handleChange } =
+    useForm(initialData, onValidate);
+
   const [response, setResponse] = useState(null);
   const [ocultaPass, setOcultaPass] = useState(true);
 
@@ -85,10 +85,13 @@ export default function ProfileScreen() {
     validation = onValidate(form);
     const { name, email, password } = form;
     if (!validation) {
-      const result = await registerUser({
+      const result = await updateUser({
+        id: usuario.id,
         name: name,
         email: email,
-        password: password,
+        telefono: telefono,
+        cumple: cumple,
+        token: usuario.token,
       });
 
       setResponse(result);
@@ -96,7 +99,7 @@ export default function ProfileScreen() {
       if (result.status) {
         setTipoMensaje(2);
         setMensaje(result.message);
-        navigation.replace("Login");
+        //navigation.replace("Login");
       } else {
         //Alert.alert(`Bienvenido ${result.message}, logueo fail`);
         //console.log("error:", result.message);
@@ -104,10 +107,6 @@ export default function ProfileScreen() {
         setMensaje(result.message);
       }
     }
-  };
-
-  const togglePasswordVisibility = () => {
-    setOcultaPass(!ocultaPass);
   };
 
   const [date, setDate] = useState(new Date());

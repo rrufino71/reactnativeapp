@@ -26,9 +26,6 @@ export default function LoginScreen() {
 
   const navigation = useNavigation();
 
-  const { form, errors, loading, setLoading, setErrors, handleChange } =
-    useForm(initialData, onValidate);
-
   const onValidate = (form) => {
     let isError = false;
     let errors = {};
@@ -61,6 +58,9 @@ export default function LoginScreen() {
     return isError ? errors : null;
   };
 
+  const { form, errors, loading, setLoading, setErrors, handleChange } =
+    useForm(initialData, onValidate);
+
   const [response, setResponse] = useState(null);
   const [ocultaPass, setOcultaPass] = useState(true);
 
@@ -89,8 +89,12 @@ export default function LoginScreen() {
       if (result.status) {
         //Alert.alert(`Bienvenido ${result.message.name}, logueo exitoso`);
 
-        const datosUsuario = { ...result.data, token: result.token };
-        //console.log(datosUsuario);
+        const datosUsuario = {
+          ...result.data,
+          token: result.token,
+          mensaje: result.mensaje,
+        };
+        console.log(datosUsuario);
         setUsuario(datosUsuario);
         setTipoMensaje(2);
         setMensaje(result.message);
