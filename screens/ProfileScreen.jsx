@@ -69,6 +69,13 @@ export default function ProfileScreen() {
       setMensaje("El E-mail no parece tener un formato valido");
       isError = true;
     }
+    if (!form.telefono.trim() && !isError) {
+      //errors.email = "El E-mail es obligatorio";
+      setTipoMensaje(1);
+      setMensaje("El telefono es obligatorio");
+      isError = true;
+    }
+
 
     setErrors(errors);
     return isError ? errors : null;
@@ -83,7 +90,7 @@ export default function ProfileScreen() {
   const onSubmit = async () => {
     let validation = false;
     validation = onValidate(form);
-    const { name, email, password } = form;
+    const { name, email, telefono, cumple } = form;
     if (!validation) {
       const result = await updateUser({
         id: usuario.id,
@@ -91,14 +98,26 @@ export default function ProfileScreen() {
         email: email,
         telefono: telefono,
         cumple: cumple,
+        argentino: 1,
+        notifica: 1,
         token: usuario.token,
       });
 
+      //console.log('result:', result)
+
       setResponse(result);
 
+      //alert(result.status)
       if (result.status) {
+        
         setTipoMensaje(2);
         setMensaje(result.message);
+        setUsuario({...usuario,        
+          name: name,
+          email: email,
+          telefono: telefono,
+          cumple: cumple,
+   })
         //navigation.replace("Login");
       } else {
         //Alert.alert(`Bienvenido ${result.message}, logueo fail`);

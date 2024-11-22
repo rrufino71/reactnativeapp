@@ -14,6 +14,7 @@ export default function CustomTabBar({ isKeyboardVisible }) {
     usuarioNombre,
     setIsAuthenticated,
     setUsuarioNombre,
+    usuario,
   } = useContext(AuthContext);
 
   if (isKeyboardVisible) {
@@ -53,7 +54,7 @@ export default function CustomTabBar({ isKeyboardVisible }) {
             }}
           >
             <SignInIcon />
-            <Text style={styles.tabLabel}>{usuarioNombre}</Text>
+            <Text style={styles.tabLabel}>{usuario.name}</Text>
           </TouchableOpacity>
         </>
       )}
