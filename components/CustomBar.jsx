@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native"; // Importa el hook de 
 import { HomeIcon, ProfileIcon, SettingsIcon, SignInIcon } from "./Icons.jsx";
 import { AuthContext } from "../contexts/AuthContext";
 
-export default function CustomTabBar() {
+export default function CustomTabBar({ isKeyboardVisible }) {
   const navigation = useNavigation(); // Obtén la función de navegación
   const {
     isAuthenticated,
@@ -16,8 +16,16 @@ export default function CustomTabBar() {
     setUsuarioNombre,
   } = useContext(AuthContext);
 
+  if (isKeyboardVisible) {
+    return null; // No renderizar nada
+  }
+
   return (
-    <View style={styles.tabContainer} className="bg-customColor5">
+    // <View style={styles.tabContainer} className="bg-customColor5">
+    <View
+      style={[isKeyboardVisible && styles.hidden, styles.tabContainer]}
+      className="bg-customColor5"
+    >
       <TouchableOpacity
         style={styles.tabButton}
         onPress={() => navigation.navigate("Home")}
@@ -86,5 +94,10 @@ const styles = StyleSheet.create({
   tabLabel: {
     fontSize: 12,
     marginTop: 4,
+  },
+  hidden: {
+    //display: "none", // Oculta el componente si el teclado está visible
+    height: 0, // Oculta el componente
+    overflow: "hidden", // Asegura que el contenido no se muestre
   },
 });

@@ -73,6 +73,8 @@ export default function LoginScreen() {
     setUsuarioNombre,
     tipoMensaje,
     setTipoMensaje,
+    usuario,
+    setUsuario,
   } = useContext(AuthContext);
 
   const onSubmit = async () => {
@@ -82,20 +84,21 @@ export default function LoginScreen() {
     if (!validation) {
       const result = await getLogin({ email: email, password: password });
 
-      console.log(result);
-
       setResponse(result);
 
       if (result.status) {
         //Alert.alert(`Bienvenido ${result.message.name}, logueo exitoso`);
 
+        const datosUsuario = { ...result.data, token: result.token };
+        //console.log(datosUsuario);
+        setUsuario(datosUsuario);
         setTipoMensaje(2);
-        setMensaje(result.data.name);
+        setMensaje(result.message);
         setIsAuthenticated(true);
-        setUsuarioNombre(result.data.name);
+        setUsuarioNombre(datosUsuario.name);
         navigation.replace("Home");
       } else {
-        Alert.alert(`Bienvenido ${result.message}, logueo fail`);
+        //Alert.alert(`Bienvenido ${result.message}, logueo fail`);
         //console.log("error:", result.message);
         setTipoMensaje(1);
         setMensaje(result.message);

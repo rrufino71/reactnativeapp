@@ -59,6 +59,7 @@ export default function App() {
           backgroundColor="white"
           translucent={true}
         />
+
         <NavigationContainer>
           <CustomStatusBar />
           <Stack.Navigator initialRouteName="Home">
@@ -98,7 +99,9 @@ export default function App() {
               options={{ headerShown: false, gestureEnabled: true }}
             />
           </Stack.Navigator>
-          {!isKeyboardVisible && <CustomTabBar />}
+          {!isKeyboardVisible && (
+            <CustomTabBar isKeyboardVisible={isKeyboardVisible} />
+          )}
         </NavigationContainer>
       </SafeAreaProvider>
     </AuthProvider>
