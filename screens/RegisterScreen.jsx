@@ -227,7 +227,9 @@ export default function RegisterScreen() {
           </Text>
         )} */}
 
-          <NotificationArea notificacion={mensaje}></NotificationArea>
+          {mensaje && (
+            <NotificationArea notificacion={mensaje}></NotificationArea>
+          )}
         </ScrollView>
       </KeyboardAvoidingView>
     </>
