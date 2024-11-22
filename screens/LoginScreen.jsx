@@ -20,7 +20,7 @@ import { Visibility, VisibilityOff } from "../components/Icons";
 export default function LoginScreen() {
   const initialData = {
     email: "rrufino71@gmail.com",
-    password: "",
+    password: "12345678",
     errors: {},
   };
 
