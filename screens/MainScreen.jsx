@@ -1,8 +1,13 @@
+import { useContext } from "react";
 import { View, StyleSheet, Button, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { NotificationArea } from "../components/NotificationArea";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function MainScreen({ navigation }) {
   const insets = useSafeAreaInsets();
+
+  const { mensaje } = useContext(AuthContext);
 
   return (
     <View
@@ -35,6 +40,8 @@ export default function MainScreen({ navigation }) {
       >
         Login
       </Text> */}
+
+      {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
     </View>
   );
 }

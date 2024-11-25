@@ -40,7 +40,7 @@ export default function ProfileScreen() {
     name: usuario.name,
     email: usuario.email,
     telefono: usuario.telefono,
-    cumple: usuario.cumple,
+    cumple: usuario.cumple.split(" ")[0],
     errors: {},
   };
 
@@ -80,8 +80,15 @@ export default function ProfileScreen() {
     return isError ? errors : null;
   };
 
-  const { form, errors, loading, setLoading, setErrors, handleChange } =
-    useForm(initialData, onValidate);
+  const {
+    form,
+    setForm,
+    errors,
+    loading,
+    setLoading,
+    setErrors,
+    handleChange,
+  } = useForm(initialData, onValidate);
 
   const [response, setResponse] = useState(null);
   const [ocultaPass, setOcultaPass] = useState(true);
@@ -127,19 +134,28 @@ export default function ProfileScreen() {
     }
   };
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date(form.cumple));
 
   const [showPicker, setShowPicker] = useState(false);
+
   const handleConfirm = (event, selectedDate) => {
     setShowPicker(false); // Ocultar el picker
     if (selectedDate) {
-      setDate(selectedDate); // Actualizar la fecha seleccionada
+      // setDate(selectedDate); // Actualizar la fecha seleccionada
+      // const formattedDate = selectedDate.toISOString().split("T")[0]; // Formato yyyy-mm-dd
+      // setForm({ ...form, cumple: formattedDate }); // Actualiza el hook form
+      const localDate = new Date(
+        selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
+      );
+      const formattedDate = localDate.toISOString().split("T")[0];
+      setForm({ ...form, cumple: formattedDate }); // Actualiza el hook form
     }
   };
 
   const formattedDate =
     date instanceof Date && !isNaN(date)
-      ? date.toISOString().split("T")[0] // Formato yyyy-mm-dd si es una fecha válida
+      ? // ? date.toISOString().split("T")[0] // Formato yyyy-mm-dd si es una fecha válida
+        new Date(form.cumple)
       : "";
 
   return (
@@ -223,7 +239,8 @@ export default function ProfileScreen() {
             <View pointerEvents="none" style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                value={date.toISOString().split("T")[0]} // Formato yyyy-mm-dd
+                //value={date.toISOString().split("T")[0]} // Formato yyyy-mm-dd
+                value={form.cumple}
                 placeholder="Seleccionar fecha"
                 editable={false} // Hace que el usuario no pueda escribir directamente
               />
