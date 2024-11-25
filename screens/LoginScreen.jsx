@@ -16,6 +16,7 @@ import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { Visibility, VisibilityOff } from "../components/Icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen() {
   const initialData = {
@@ -87,19 +88,19 @@ export default function LoginScreen() {
       setResponse(result);
 
       if (result.status) {
-        //Alert.alert(`Bienvenido ${result.message.name}, logueo exitoso`);
-
         const datosUsuario = {
           ...result.data,
           token: result.token,
           mensaje: result.mensaje,
         };
-        //console.log(datosUsuario);
         setUsuario(datosUsuario);
         setTipoMensaje(2);
         setMensaje(result.message);
         setIsAuthenticated(true);
         setUsuarioNombre(datosUsuario.name);
+        console.log(usuario);
+        saveData();
+
         navigation.replace("Home");
       } else {
         //Alert.alert(`Bienvenido ${result.message}, logueo fail`);
@@ -112,6 +113,15 @@ export default function LoginScreen() {
 
   const togglePasswordVisibility = () => {
     setOcultaPass(!ocultaPass);
+  };
+
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem("usuario", JSON.stringify(usuario));
+      console.log("Data saved successfully!");
+    } catch (error) {
+      console.error("Error saving data: ", error);
+    }
   };
 
   return (

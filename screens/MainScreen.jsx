@@ -3,11 +3,32 @@ import { View, StyleSheet, Button, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MainScreen({ navigation }) {
   const insets = useSafeAreaInsets();
 
   const { mensaje } = useContext(AuthContext);
+
+  const loadData = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem("usuario");
+      if (storedData !== null) {
+        const data = JSON.parse(storedData); // Convertir de vuelta a objeto
+        //console.log("Datos recuperados:", data);
+        console.log("id:", data.id);
+        console.log("name:", data.name);
+        console.log("mail:", data.email);
+        console.log("cumple:", data.cumple);
+        console.log("telefono:", data.telefono);
+        console.log("token:", data.token);
+      } else {
+        console.log("Sin datos para mostrar");
+      }
+    } catch (error) {
+      console.error("Error leyendo datos: ", error);
+    }
+  };
 
   return (
     <View
@@ -34,12 +55,9 @@ export default function MainScreen({ navigation }) {
       >
         Contacto
       </Text>
-      {/* <Text
-        style={{ color: "blue", marginTop: 20 }}
-        onPress={() => navigation.navigate("Login")}
-      >
-        Login
-      </Text> */}
+      <Text style={{ color: "blue", marginTop: 20 }} onPress={loadData}>
+        Load Data
+      </Text>
 
       {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
     </View>

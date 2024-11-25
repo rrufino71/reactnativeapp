@@ -19,8 +19,8 @@ import { updateUser } from "../libs/auth";
 import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
-
 import DateTimePicker from "@react-native-community/datetimepicker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ProfileScreen() {
   const {
@@ -175,6 +175,17 @@ export default function ProfileScreen() {
     }
   }, [showPicker]);
 
+  const removeData = async () => {
+    try {
+      //await AsyncStorage.removeItem("userName");
+      await AsyncStorage.removeItem("usuario");
+      //await AsyncStorage.clear();
+      console.log("Data removed successfully");
+    } catch (error) {
+      console.error("Error removing data: ", error);
+    }
+  };
+
   return (
     <>
       <KeyboardAvoidingView
@@ -306,6 +317,7 @@ export default function ProfileScreen() {
               onPress={() => {
                 setIsAuthenticated(false);
                 setUsuarioNombre(null);
+                removeData();
                 navigation.navigate("Login");
               }}
             >
