@@ -123,7 +123,7 @@ export async function updateUser(datos) {
     notifica: datos.notifica,
     argentino: datos.argentino,
     cumple: datos.cumple,
-    token: datos.token
+    token: datos.token,
   };
 
   //console.log("data",data)
@@ -154,7 +154,7 @@ export async function updateUser(datos) {
         data: respuesta.data,
         token: respuesta.token,
       };
-      console.log('response',response)
+      //console.log("response", response);
     } else {
       // Captura código y texto de estado para los errores
       let errorText = "";

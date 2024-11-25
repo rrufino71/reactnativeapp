@@ -40,9 +40,19 @@ export default function ProfileScreen() {
     name: usuario.name,
     email: usuario.email,
     telefono: usuario.telefono,
-    cumple: usuario.cumple.split(" ")[0],
+    cumple: usuario.cumple,
     errors: {},
   };
+
+  const {
+    form,
+    setForm,
+    errors,
+    loading,
+    setLoading,
+    setErrors,
+    handleChange,
+  } = useForm(initialData, onValidate);
 
   const navigation = useNavigation();
 
@@ -79,16 +89,6 @@ export default function ProfileScreen() {
     setErrors(errors);
     return isError ? errors : null;
   };
-
-  const {
-    form,
-    setForm,
-    errors,
-    loading,
-    setLoading,
-    setErrors,
-    handleChange,
-  } = useForm(initialData, onValidate);
 
   const [response, setResponse] = useState(null);
   const [ocultaPass, setOcultaPass] = useState(true);
@@ -134,29 +134,46 @@ export default function ProfileScreen() {
     }
   };
 
-  const [date, setDate] = useState(new Date(form.cumple));
-
   const [showPicker, setShowPicker] = useState(false);
+  const [date, setDate] = useState(() => new Date()); // Fecha inicial basada en el formulario
 
   const handleConfirm = (event, selectedDate) => {
     setShowPicker(false); // Ocultar el picker
     if (selectedDate) {
-      // setDate(selectedDate); // Actualizar la fecha seleccionada
-      // const formattedDate = selectedDate.toISOString().split("T")[0]; // Formato yyyy-mm-dd
-      // setForm({ ...form, cumple: formattedDate }); // Actualiza el hook form
       const localDate = new Date(
         selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
       );
       const formattedDate = localDate.toISOString().split("T")[0];
       setForm({ ...form, cumple: formattedDate }); // Actualiza el hook form
+      setDate(formattedDate);
     }
   };
 
-  const formattedDate =
-    date instanceof Date && !isNaN(date)
-      ? // ? date.toISOString().split("T")[0] // Formato yyyy-mm-dd si es una fecha válida
-        new Date(form.cumple)
-      : "";
+  useEffect(() => {
+    if (showPicker) {
+      const cumpleDate = new Date(form.cumple + "T00:00:00");
+
+      const localDate = new Date(
+        cumpleDate.getFullYear(),
+        cumpleDate.getMonth(),
+        cumpleDate.getDate()
+      );
+
+      // console.log("localDate", localDate.toISOString().split("T")[0]);
+
+      // const localDate_zone = new Date(
+      //   localDate.getTime() - localDate.getTimezoneOffset() * 60000
+      // );
+      const localDate_zone = new Date(localDate);
+
+      // console.log("localDate_zone", localDate_zone.toISOString().split("T")[0]);
+
+      setDate(new Date(localDate_zone));
+      //      console.log("date:", date);
+    } else {
+      setDate(new Date());
+    }
+  }, [showPicker]);
 
   return (
     <>

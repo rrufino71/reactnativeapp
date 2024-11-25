@@ -94,7 +94,7 @@ export default function LoginScreen() {
           token: result.token,
           mensaje: result.mensaje,
         };
-        console.log(datosUsuario);
+        //console.log(datosUsuario);
         setUsuario(datosUsuario);
         setTipoMensaje(2);
         setMensaje(result.message);

@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       // Declarar el temporizador
       const timer = setTimeout(() => {
         setMensaje(null);
-      }, 4000); // 4 segundos
+      }, 2000); // 2 segundos
       // Limpiar el temporizador cuando el componente se desmonte
       return () => clearTimeout(timer);
     }
