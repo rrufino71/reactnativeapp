@@ -76,7 +76,6 @@ export default function ProfileScreen() {
       isError = true;
     }
 
-
     setErrors(errors);
     return isError ? errors : null;
   };
@@ -109,15 +108,15 @@ export default function ProfileScreen() {
 
       //alert(result.status)
       if (result.status) {
-        
         setTipoMensaje(2);
         setMensaje(result.message);
-        setUsuario({...usuario,        
+        setUsuario({
+          ...usuario,
           name: name,
           email: email,
           telefono: telefono,
           cumple: cumple,
-   })
+        });
         //navigation.replace("Login");
       } else {
         //Alert.alert(`Bienvenido ${result.message}, logueo fail`);
@@ -138,10 +137,10 @@ export default function ProfileScreen() {
     }
   };
 
-  const formattedDate = usuario.cumple.toISOString().split("T")[0]
-    // date instanceof Date && !isNaN(date)
-    //   ? date.toISOString().split("T")[0] // Formato yyyy-mm-dd si es una fecha válida
-    //   : "";
+  const formattedDate =
+    date instanceof Date && !isNaN(date)
+      ? date.toISOString().split("T")[0] // Formato yyyy-mm-dd si es una fecha válida
+      : "";
 
   return (
     <>
