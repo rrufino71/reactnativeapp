@@ -20,7 +20,7 @@ import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { removeData } from "../libs/sesiones";
 
 export default function ProfileScreen() {
   const {
@@ -43,18 +43,6 @@ export default function ProfileScreen() {
     cumple: usuario.cumple,
     errors: {},
   };
-
-  const {
-    form,
-    setForm,
-    errors,
-    loading,
-    setLoading,
-    setErrors,
-    handleChange,
-  } = useForm(initialData, onValidate);
-
-  const navigation = useNavigation();
 
   const onValidate = (form) => {
     let isError = false;
@@ -89,6 +77,17 @@ export default function ProfileScreen() {
     setErrors(errors);
     return isError ? errors : null;
   };
+  const {
+    form,
+    setForm,
+    errors,
+    loading,
+    setLoading,
+    setErrors,
+    handleChange,
+  } = useForm(initialData, onValidate);
+
+  const navigation = useNavigation();
 
   const [response, setResponse] = useState(null);
   const [ocultaPass, setOcultaPass] = useState(true);
@@ -174,17 +173,6 @@ export default function ProfileScreen() {
       setDate(new Date());
     }
   }, [showPicker]);
-
-  const removeData = async () => {
-    try {
-      //await AsyncStorage.removeItem("userName");
-      await AsyncStorage.removeItem("usuario");
-      //await AsyncStorage.clear();
-      console.log("Data removed successfully");
-    } catch (error) {
-      console.error("Error removing data: ", error);
-    }
-  };
 
   return (
     <>

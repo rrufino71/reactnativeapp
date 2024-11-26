@@ -16,7 +16,7 @@ import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { Visibility, VisibilityOff } from "../components/Icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { saveData } from "../libs/sesiones";
 
 export default function LoginScreen() {
   const initialData = {
@@ -78,6 +78,15 @@ export default function LoginScreen() {
     setUsuario,
   } = useContext(AuthContext);
 
+  async function saveUserData(key, value) {
+    const session = await saveData(key, value); // Reemplaza 'userData' con la clave que guardaste
+    if (session) {
+      console.log("Datos del usuario guardados.");
+    } else {
+      console.log("No se guardaron datos.");
+    }
+  }
+
   const onSubmit = async () => {
     let validation = false;
     validation = onValidate(form);
@@ -98,8 +107,7 @@ export default function LoginScreen() {
         setMensaje(result.message);
         setIsAuthenticated(true);
         setUsuarioNombre(datosUsuario.name);
-        console.log(usuario);
-        saveData();
+        saveUserData("usuario", datosUsuario);
 
         navigation.replace("Home");
       } else {
@@ -113,15 +121,6 @@ export default function LoginScreen() {
 
   const togglePasswordVisibility = () => {
     setOcultaPass(!ocultaPass);
-  };
-
-  const saveData = async () => {
-    try {
-      await AsyncStorage.setItem("usuario", JSON.stringify(usuario));
-      console.log("Data saved successfully!");
-    } catch (error) {
-      console.error("Error saving data: ", error);
-    }
   };
 
   return (

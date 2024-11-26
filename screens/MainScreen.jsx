@@ -3,32 +3,23 @@ import { View, StyleSheet, Button, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { loadData } from "../libs/sesiones";
 
 export default function MainScreen({ navigation }) {
   const insets = useSafeAreaInsets();
 
   const { mensaje } = useContext(AuthContext);
 
-  const loadData = async () => {
-    try {
-      const storedData = await AsyncStorage.getItem("usuario");
-      if (storedData !== null) {
-        const data = JSON.parse(storedData); // Convertir de vuelta a objeto
-        //console.log("Datos recuperados:", data);
-        console.log("id:", data.id);
-        console.log("name:", data.name);
-        console.log("mail:", data.email);
-        console.log("cumple:", data.cumple);
-        console.log("telefono:", data.telefono);
-        console.log("token:", data.token);
-      } else {
-        console.log("Sin datos para mostrar");
-      }
-    } catch (error) {
-      console.error("Error leyendo datos: ", error);
+  async function fetchUserData(key) {
+    const session = await loadData(key); // Reemplaza 'userData' con la clave que guardaste
+    if (session) {
+      console.log("Datos del usuario:", session);
+      return session;
+    } else {
+      console.log("No se encontraron datos.");
+      return null;
     }
-  };
+  }
 
   return (
     <View
@@ -55,7 +46,12 @@ export default function MainScreen({ navigation }) {
       >
         Contacto
       </Text>
-      <Text style={{ color: "blue", marginTop: 20 }} onPress={loadData}>
+      <Text
+        style={{ color: "blue", marginTop: 20 }}
+        onPress={() => {
+          fetchUserData("usuario");
+        }}
+      >
         Load Data
       </Text>
 
