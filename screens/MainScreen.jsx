@@ -1,25 +1,37 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Button, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
-import { loadData } from "../libs/sesiones";
+import { fetchUserData } from "../libs/sesiones";
 
 export default function MainScreen({ navigation }) {
   const insets = useSafeAreaInsets();
 
-  const { mensaje } = useContext(AuthContext);
+  const { mensaje, setUsuario, setIsAuthenticated } = useContext(AuthContext);
+  const [dataSession, setDataSession] = useState(null);
 
-  async function fetchUserData(key) {
-    const session = await loadData(key); // Reemplaza 'userData' con la clave que guardaste
-    if (session) {
-      console.log("Datos del usuario:", session);
-      return session;
-    } else {
-      console.log("No se encontraron datos.");
-      return null;
+  useEffect(() => {
+    async function tomaDatos() {
+      console.log("Tomando datos de usuario");
+      const session = await fetchUserData("usuario"); // Reemplaza 'userData' con la clave que guardaste
+      if (session) {
+        console.log("Datos del usuario:", session);
+        setDataSession(session);
+      }
     }
-  }
+    tomaDatos();
+  }, []);
+
+  useEffect(() => {
+    if (dataSession) {
+      setUsuario(dataSession);
+      setIsAuthenticated(true);
+    } else {
+      setUsuario(null);
+      setIsAuthenticated(false);
+    }
+  }, [dataSession]);
 
   return (
     <View

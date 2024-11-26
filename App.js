@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Keyboard } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   SafeAreaProvider,
   useSafeAreaInsets,

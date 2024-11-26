@@ -20,7 +20,7 @@ import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { removeData } from "../libs/sesiones";
+import { removeUserData, saveUserData } from "../libs/sesiones";
 
 export default function ProfileScreen() {
   const {
@@ -36,13 +36,32 @@ export default function ProfileScreen() {
     setUsuario,
   } = useContext(AuthContext);
 
-  const initialData = {
-    name: usuario.name,
-    email: usuario.email,
-    telefono: usuario.telefono,
-    cumple: usuario.cumple,
+  let initialData = {
+    name: "",
+    email: "",
+    telefono: "",
+    cumple: "",
     errors: {},
   };
+
+  useEffect(() => {
+    if (!usuario) return;
+    initialData = {
+      name: usuario.name,
+      email: usuario.email,
+      telefono: usuario.telefono,
+      cumple: usuario.cumple,
+      errors: {},
+    };
+    setForm({
+      name: usuario.name,
+      email: usuario.email,
+      telefono: usuario.telefono,
+      cumple: usuario.cumple,
+    });
+
+    saveUserData("usuario", usuario);
+  }, [usuario]);
 
   const onValidate = (form) => {
     let isError = false;
@@ -305,7 +324,7 @@ export default function ProfileScreen() {
               onPress={() => {
                 setIsAuthenticated(false);
                 setUsuarioNombre(null);
-                removeData();
+                removeUserData();
                 navigation.navigate("Login");
               }}
             >

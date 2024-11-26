@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export async function loadData(key) {
+async function loadData(key) {
   let data = null;
   try {
     const storedData = await AsyncStorage.getItem(key);
@@ -20,7 +20,7 @@ export async function loadData(key) {
   }
 }
 
-export async function saveData(key, value) {
+async function saveData(key, value) {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
     //console.log("Data saved successfully!");
@@ -31,7 +31,7 @@ export async function saveData(key, value) {
   }
 }
 
-export async function removeData(key) {
+async function removeData(key) {
   try {
     //await AsyncStorage.removeItem("userName");
     if (key) {
@@ -39,10 +39,38 @@ export async function removeData(key) {
     } else {
       await AsyncStorage.clear();
     }
-    console.log("Data removed successfully");
     return true;
   } catch (error) {
     console.error("Error removing data: ", error);
     return false;
+  }
+}
+
+export async function fetchUserData(key) {
+  const session = await loadData(key); // Reemplaza 'userData' con la clave que guardaste
+  if (session) {
+    console.log("Datos del usuario:", session);
+    return session;
+  } else {
+    console.log("No se encontraron datos.");
+    return null;
+  }
+}
+
+export async function saveUserData(key, value) {
+  const session = await saveData(key, value); // Reemplaza 'userData' con la clave que guardaste
+  if (session) {
+    console.log("Datos del usuario guardados.");
+  } else {
+    console.log("No se guardaron datos.");
+  }
+}
+
+export async function removeUserData(key) {
+  const session = await removeData(key); // Reemplaza 'userData' con la clave que guardaste
+  if (session) {
+    console.log("Datos eliminados.");
+  } else {
+    console.log("No se eliminaron datos.");
   }
 }

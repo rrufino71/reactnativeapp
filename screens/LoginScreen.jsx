@@ -16,7 +16,7 @@ import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { Visibility, VisibilityOff } from "../components/Icons";
-import { saveData } from "../libs/sesiones";
+import { saveUserData } from "../libs/sesiones";
 
 export default function LoginScreen() {
   const initialData = {
@@ -78,15 +78,6 @@ export default function LoginScreen() {
     setUsuario,
   } = useContext(AuthContext);
 
-  async function saveUserData(key, value) {
-    const session = await saveData(key, value); // Reemplaza 'userData' con la clave que guardaste
-    if (session) {
-      console.log("Datos del usuario guardados.");
-    } else {
-      console.log("No se guardaron datos.");
-    }
-  }
-
   const onSubmit = async () => {
     let validation = false;
     validation = onValidate(form);
@@ -106,7 +97,7 @@ export default function LoginScreen() {
         setTipoMensaje(2);
         setMensaje(result.message);
         setIsAuthenticated(true);
-        setUsuarioNombre(datosUsuario.name);
+        //setUsuarioNombre(datosUsuario.name);
         saveUserData("usuario", datosUsuario);
 
         navigation.replace("Home");
