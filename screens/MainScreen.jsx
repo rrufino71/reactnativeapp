@@ -9,7 +9,7 @@ import Biometrics from "../components/Biometrics";
 export default function MainScreen({ navigation }) {
   const insets = useSafeAreaInsets();
 
-  const { mensaje, setUsuario, setIsAuthenticated, colorScheme } =
+  const { mensaje, setUsuario, setIsAuthenticated, usuario } =
     useContext(AuthContext);
   const [dataSession, setDataSession] = useState(null);
 
@@ -44,7 +44,9 @@ export default function MainScreen({ navigation }) {
         paddingRight: insets.right, // Aplica el margen derecho
         //backgroundColor: "rgba(175, 176, 227, 0.3)",
       }}
-      className={`flex-1 justify-center items-center ${colorScheme}`}
+      className={`flex-1 justify-center items-center bg-${
+        usuario && usuario.colorScheme
+      }-back`}
     >
       <Button title="Go to About" onPress={() => navigation.replace("About")} />
       {/* Texto que también navega a DetailsScreen */}

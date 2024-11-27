@@ -75,18 +75,8 @@ export default function RegisterScreen() {
   const [response, setResponse] = useState(null);
   const [ocultaPass, setOcultaPass] = useState(true);
 
-  const {
-    isAuthenticated,
-    mensaje,
-    setMensaje,
-    setIsAuthenticated,
-    usuarioNombre,
-    setUsuarioNombre,
-    tipoMensaje,
-    setTipoMensaje,
-    usuario,
-    setUsuario,
-  } = useContext(AuthContext);
+  const { mensaje, setMensaje, setTipoMensaje, usuario } =
+    useContext(AuthContext);
 
   const onSubmit = async () => {
     let validation = false;
@@ -135,6 +125,7 @@ export default function RegisterScreen() {
               height: 100,
               marginTop: 40,
             }}
+            className={`${usuario && usuario.colorScheme}`}
           >
             <Text
               style={{

@@ -201,6 +201,10 @@ export default function ProfileScreen() {
         keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 130} // Ajusta según la altura del header o barra superior
       >
         <ScrollView
+          // className={`flex-1 justify-center items-center ${
+          //   usuario ? "bg-" + usuario.colorScheme + "-back" : ""
+          // }`}
+          className="flex-1 justify-center items-center bg-customColor1-back"
           contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
           keyboardShouldPersistTaps="handled"
         >
@@ -216,16 +220,21 @@ export default function ProfileScreen() {
                 textAlign: "center",
                 fontWeight: "bold",
                 fontSize: 32,
+                paddingTop: 20,
               }}
+              className="flex-1 justify-center items-center  text-customColor1-title"
             >
-              Registro
+              Perfil
             </Text>
           </View>
           <View>
-            <Text style={styles.label}>Nombre</Text>
+            <Text style={styles.label} className="text-customColor1-labels">
+              Nombre
+            </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
+              className="text-customColor1-inputs"
               style={styles.input}
               label="Nombre"
               keyboardType="default"
@@ -237,7 +246,9 @@ export default function ProfileScreen() {
           </View>
 
           <View>
-            <Text style={styles.label}>Correo Electronico</Text>
+            <Text style={styles.label} className="text-customColor1-labels">
+              Correo Electronico
+            </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -251,7 +262,9 @@ export default function ProfileScreen() {
             {errors.email && <Text style={styles.error}>{errors.email}</Text>}
           </View>
           <View>
-            <Text style={styles.label}>Telefono</Text>
+            <Text style={styles.label} className="text-customColor1-labels">
+              Telefono
+            </Text>
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -268,7 +281,9 @@ export default function ProfileScreen() {
           </View>
 
           <View>
-            <Text style={styles.label}>Fecha Cumpleaños</Text>
+            <Text style={styles.label} className="text-customColor1-labels">
+              Fecha Cumpleaños
+            </Text>
           </View>
           <Pressable onPress={() => setShowPicker(true)}>
             <View pointerEvents="none" style={styles.inputContainer}>
@@ -351,7 +366,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     margin: 20,
-    color: "grey",
   },
   input: {
     flex: 1, // Ocupa todo el espacio restante

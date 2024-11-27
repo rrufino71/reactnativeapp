@@ -11,7 +11,6 @@ export const AuthProvider = ({ children }) => {
   const [tipoMensaje, setTipoMensaje] = useState(null);
   const [usuarioNombre, setUsuarioNombre] = useState(null);
   const [usuario, setUsuario] = useState({});
-  const [colorScheme, setColorScheme] = useState("");
 
   // Función para iniciar sesión (puedes modificarla según tus necesidades)
   const login = () => setIsAuthenticated(true);
@@ -49,8 +48,6 @@ export const AuthProvider = ({ children }) => {
         setTipoMensaje,
         usuario,
         setUsuario,
-        colorScheme,
-        setColorScheme,
       }}
     >
       {children}

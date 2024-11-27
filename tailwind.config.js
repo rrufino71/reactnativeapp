@@ -11,14 +11,17 @@ module.exports = {
     extend: {
       colors: {
         customColor1: {
-          DEFAULT: "#8bbff2",
-          light: "#b4d7f9",
-          dark: "#2d1e70",
+          back: "#b4d7f9",
+          title: "white",
+          labels: "black",
+          inputs: "grey",
         },
         customColor2: {
           DEFAULT: "#10b981",
           light: "#6ee7b7",
           dark: "#047857",
+          back: "#6ee7b7",
+          texto: "white",
         },
         customColor3: {
           DEFAULT: "#ee011e",

@@ -92,7 +92,7 @@ export default function LoginScreen() {
           ...result.data,
           token: result.token,
           mensaje: result.mensaje,
-          colorScheme: "bg-customColor3-light",
+          colorScheme: "customColor1", //agregar a la api
         };
         setUsuario(datosUsuario);
         setTipoMensaje(2);
