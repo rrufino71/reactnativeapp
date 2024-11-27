@@ -325,7 +325,7 @@ export default function ProfileScreen() {
                 setIsAuthenticated(false);
                 setUsuarioNombre(null);
                 removeUserData();
-                navigation.navigate("Login");
+                navigation.navigate("Home");
               }}
             >
               Cerrar Sesion ?

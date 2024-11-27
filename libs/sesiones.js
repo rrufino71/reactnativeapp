@@ -16,7 +16,7 @@ async function loadData(key) {
       return data;
     }
   } catch (error) {
-    console.error("Error leyendo datos: ", error);
+    //console.error("Error leyendo datos: ", error);
   }
 }
 
@@ -26,7 +26,7 @@ async function saveData(key, value) {
     //console.log("Data saved successfully!");
     return true;
   } catch (error) {
-    console.error("Error saving data: ", error);
+    //console.error("Error saving data: ", error);
     return false;
   }
 }
@@ -41,7 +41,7 @@ async function removeData(key) {
     }
     return true;
   } catch (error) {
-    console.error("Error removing data: ", error);
+    //console.error("Error removing data: ", error);
     return false;
   }
 }
@@ -49,10 +49,10 @@ async function removeData(key) {
 export async function fetchUserData(key) {
   const session = await loadData(key); // Reemplaza 'userData' con la clave que guardaste
   if (session) {
-    console.log("Datos del usuario:", session);
+    //console.log("Datos del usuario:", session);
     return session;
   } else {
-    console.log("No se encontraron datos.");
+    //console.log("No se encontraron datos.");
     return null;
   }
 }
@@ -60,17 +60,17 @@ export async function fetchUserData(key) {
 export async function saveUserData(key, value) {
   const session = await saveData(key, value); // Reemplaza 'userData' con la clave que guardaste
   if (session) {
-    console.log("Datos del usuario guardados.");
+    //console.log("Datos del usuario guardados.");
   } else {
-    console.log("No se guardaron datos.");
+    //console.log("No se guardaron datos.");
   }
 }
 
 export async function removeUserData(key) {
   const session = await removeData(key); // Reemplaza 'userData' con la clave que guardaste
   if (session) {
-    console.log("Datos eliminados.");
+    //console.log("Datos eliminados.");
   } else {
-    console.log("No se eliminaron datos.");
+    //console.log("No se eliminaron datos.");
   }
 }

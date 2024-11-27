@@ -4,19 +4,21 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { fetchUserData } from "../libs/sesiones";
+import Biometrics from "../components/Biometrics";
 
 export default function MainScreen({ navigation }) {
   const insets = useSafeAreaInsets();
 
-  const { mensaje, setUsuario, setIsAuthenticated } = useContext(AuthContext);
+  const { mensaje, setUsuario, setIsAuthenticated, colorScheme } =
+    useContext(AuthContext);
   const [dataSession, setDataSession] = useState(null);
 
   useEffect(() => {
     async function tomaDatos() {
-      console.log("Tomando datos de usuario");
+      //console.log("Tomando datos de usuario");
       const session = await fetchUserData("usuario"); // Reemplaza 'userData' con la clave que guardaste
       if (session) {
-        console.log("Datos del usuario:", session);
+        //console.log("Datos del usuario:", session);
         setDataSession(session);
       }
     }
@@ -42,7 +44,7 @@ export default function MainScreen({ navigation }) {
         paddingRight: insets.right, // Aplica el margen derecho
         //backgroundColor: "rgba(175, 176, 227, 0.3)",
       }}
-      className="flex-1 justify-center items-center bg-customColor1-light"
+      className={`flex-1 justify-center items-center ${colorScheme}`}
     >
       <Button title="Go to About" onPress={() => navigation.replace("About")} />
       {/* Texto que también navega a DetailsScreen */}
@@ -66,6 +68,7 @@ export default function MainScreen({ navigation }) {
       >
         Load Data
       </Text>
+      <Biometrics />
 
       {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
     </View>
