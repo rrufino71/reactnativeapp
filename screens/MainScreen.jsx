@@ -5,6 +5,7 @@ import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { fetchUserData } from "../libs/sesiones";
 import Biometrics from "../components/Biometrics";
+import BorderMenu from "../components/BorderMenu";
 
 export default function MainScreen({ navigation }) {
   const insets = useSafeAreaInsets();

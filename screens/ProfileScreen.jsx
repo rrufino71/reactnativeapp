@@ -253,6 +253,7 @@ export default function ProfileScreen() {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
+              className="text-customColor1-inputs"
               label="e-mail"
               keyboardType="emailAddress"
               placeholder="E-Mail"
@@ -268,6 +269,7 @@ export default function ProfileScreen() {
           </View>
           <View style={styles.inputContainer}>
             <TextInput
+              className="text-customColor1-inputs"
               style={styles.input}
               label="Telefono"
               keyboardType="number-pad"
@@ -289,6 +291,7 @@ export default function ProfileScreen() {
             <View pointerEvents="none" style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
+                className="text-customColor1-inputs"
                 //value={date.toISOString().split("T")[0]} // Formato yyyy-mm-dd
                 value={form.cumple}
                 placeholder="Seleccionar fecha"
@@ -365,12 +368,16 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    margin: 20,
+    margin: 5,
   },
   input: {
     flex: 1, // Ocupa todo el espacio restante
     fontSize: 16,
-    paddingVertical: 0,
+    paddingVertical: 5,
+    borderWidth: 0, // Sin bordes
+    borderColor: "transparent", // Elimina el color del borde
+    outlineStyle: "none", // Desactiva el estilo en foco (solo para ciertas plataformas)
+    backgroundColor: "transparent", // Evita cambios de color al enfocar
   },
   iconButton: {
     marginLeft: 10, // Espacio entre el ícono y el input
@@ -397,6 +404,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     height: 50, // Fija el mismo alto para ambos contenedores
     backgroundColor: "white",
-    marginHorizontal: 20,
+    width: 400,
   },
 });

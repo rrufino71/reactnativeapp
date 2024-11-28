@@ -27,3 +27,7 @@ export const Visibility = (props) => (
 export const VisibilityOff = (props) => (
   <MaterialIcons name="visibility-off" size={24} color="black" {...props} />
 );
+
+export const MenuIcon = (props) => (
+  <MaterialIcons name="menu" size={24} color="black" {...props} />
+);
