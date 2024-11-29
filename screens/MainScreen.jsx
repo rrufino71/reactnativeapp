@@ -146,7 +146,7 @@ function BorderMenu({ navigation }) {
         menuVisible ? { zIndex: 100 } : { zIndex: -1, height: 0, width: 0 },
       ]}
     >
-      {/* Icono del menú - visible solo cuando el menú está cerrado */}
+      {/* Botón del menú - visible solo cuando el menú está cerrado */}
       {!menuVisible && (
         <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
           <Text style={styles.menuText}>☰</Text>
@@ -160,9 +160,6 @@ function BorderMenu({ navigation }) {
         <View style={styles.containerTitleView}>
           <Text style={styles.titleMenu}>Menu</Text>
         </View>
-        {/* <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
-          <Text style={styles.closeText}>✕</Text>
-        </TouchableOpacity> */}
         <Text
           style={styles.drawerText}
           onPress={() => {
@@ -208,22 +205,16 @@ const styles = StyleSheet.create({
     left: 0,
     width: "100%",
     height: "100%",
-    zIndex: 100, // Asegura que todo esté encima de otros elementos
-  },
-  containerTitleView: {
-    backgroundColor: "rgba(4, 55, 186,0.8)",
-    margin: 0,
-    padding: 15,
-    width: "100%",
+    zIndex: 100, // Asegura que el menú esté por encima de otros elementos
   },
   menuButton: {
     position: "absolute",
     top: 0,
-    left: 0, // Ícono a la izquierda de la pantalla
+    left: 0, // Ícono en la esquina superior izquierda
     padding: 10,
-    backgroundColor: "rgba(142, 167, 232,0.8)",
+    backgroundColor: "rgba(142, 167, 232, 0.8)",
     borderRadius: 5,
-    zIndex: 110, // El botón está por encima incluso del menú
+    zIndex: 110, // Asegura que el botón esté encima del menú
   },
   menuText: {
     color: "white",
@@ -231,32 +222,26 @@ const styles = StyleSheet.create({
   },
   drawer: {
     position: "absolute",
-    left: 0,
-    top: 0, // Mantener el menú alineado con la parte superior
-    width: width / 2, // Menú ocupa la mitad del ancho de la pantalla
-    height: "100%", // Ocupa todo el alto
-    backgroundColor: "rgba(110, 144, 231, 0.8)", // Fondo blanco con opacidad del 80%
+    top: 0,
+    left: 0, // El menú se despliega desde la izquierda
+    width: width / 2, // El menú ocupa la mitad del ancho de la pantalla
+    height: "100%", // El menú ocupa todo el alto
     elevation: 10, // Sombra en Android
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 }, // Sombra en iOS
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    //paddingHorizontal: 20,
-    //paddingVertical: 20, // Espacio interno
-    zIndex: 105, // Garantiza que esté encima del contenido principal
-    borderWidth: 0,
+    zIndex: 105, // El menú debe estar por encima del fondo pero debajo del botón
   },
-  closeButton: {
-    alignSelf: "flex-end", // Botón de cierre en la esquina superior derecha del menú
+  containerTitleView: {
+    backgroundColor: "rgba(4, 55, 186, 0.8)",
+    padding: 15,
+    width: "100%",
   },
   titleMenu: {
-    alignSelf: "flex-start", // Botón de cierre en la esquina superior derecha del menú
     color: "white",
     fontSize: 20,
     fontWeight: "bold",
-  },
-  closeText: {
-    fontSize: 18,
   },
   drawerText: {
     fontSize: 18,
@@ -265,15 +250,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   divider: {
-    height: 1, // Grosor de la línea
-    backgroundColor: "#fff", // Color de la línea
-    marginVertical: 5, // Espaciado vertical
-    width: "100%", // Ancho de la línea
-    alignSelf: "center", // Centrar la línea
-  },
-  backgroundImage: {
-    flex: 1, // Ocupar todo el espacio disponible
-    justifyContent: "center", // Centrar verticalmente el contenido
-    alignItems: "center", // Centrar horizontalmente el contenido
+    height: 1,
+    backgroundColor: "#fff",
+    marginVertical: 5,
+    width: "100%",
+    alignSelf: "center",
   },
 });
