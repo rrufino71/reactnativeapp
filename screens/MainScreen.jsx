@@ -223,15 +223,16 @@ const styles = StyleSheet.create({
   drawer: {
     position: "absolute",
     top: 0,
-    left: 0, // El menú se despliega desde la izquierda
-    width: width / 2, // El menú ocupa la mitad del ancho de la pantalla
-    height: "100%", // El menú ocupa todo el alto
-    elevation: 10, // Sombra en Android
+    left: 0,
+    width: width / 2,
+    //height: "100%",
+    elevation: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    zIndex: 105, // El menú debe estar por encima del fondo pero debajo del botón
+    zIndex: 105,
+    backgroundColor: "rgba(110, 144, 231, 0.8)",
   },
   containerTitleView: {
     backgroundColor: "rgba(4, 55, 186, 0.8)",
