@@ -13,6 +13,8 @@ import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { fetchUserData } from "../libs/sesiones";
 import Biometrics from "../components/Biometrics";
+import { MenuIcon } from "../components/Icons";
+
 const { width } = Dimensions.get("window"); // Obtener ancho de la pantalla
 
 export default function MainScreen({ navigation }) {
@@ -57,7 +59,7 @@ export default function MainScreen({ navigation }) {
         usuario && usuario.colorScheme
       }-back`}
     >
-      <BorderMenu />
+      <BorderMenu navigation={navigation} />
 
       <Button title="Go to About" onPress={() => navigation.replace("About")} />
       {/* Texto que también navega a DetailsScreen */}
@@ -88,7 +90,7 @@ export default function MainScreen({ navigation }) {
   );
 }
 
-function BorderMenu() {
+function BorderMenu({ navigation }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const translateX = useState(new Animated.Value(-width / 2))[0]; // Inicia fuera de la vista
   const opacity = useState(new Animated.Value(0))[0]; // Inicia completamente invisible
@@ -127,7 +129,12 @@ function BorderMenu() {
   };
 
   return (
-    <View style={styles.containerMenu}>
+    <View
+      style={[
+        styles.containerMenu,
+        menuVisible ? { zIndex: 100 } : { zIndex: -1, height: 0, width: 0 },
+      ]}
+    >
       {/* Icono del menú - visible solo cuando el menú está cerrado */}
       {!menuVisible && (
         <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
@@ -139,12 +146,35 @@ function BorderMenu() {
       <Animated.View
         style={[styles.drawer, { transform: [{ translateX }], opacity }]}
       >
-        <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
+        <View
+          style={{
+            backgroundColor: "rgba(4, 55, 186,0.8)",
+            margin: 0,
+            padding: 15,
+            width: "100%",
+          }}
+        >
+          <Text style={styles.titleMenu}>Menu</Text>
+        </View>
+
+        {/* <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
           <Text style={styles.closeText}>✕</Text>
+        </TouchableOpacity> */}
+        <Text
+          style={styles.drawerText}
+          onPress={() => {
+            navigation.navigate("Contacto");
+            toggleMenu(); // Cierra el menú después de navegar
+          }}
+        >
+          Contacto
+        </Text>
+        <Text style={styles.drawerText}>About</Text>
+        <Text style={styles.drawerText}>Load Data</Text>
+        <Text style={styles.drawerText}>Autenticar con Huella</Text>
+        <TouchableOpacity onPress={toggleMenu}>
+          <Text style={styles.drawerText}>Cerrar</Text>
         </TouchableOpacity>
-        <Text style={styles.drawerText}>Opción 1</Text>
-        <Text style={styles.drawerText}>Opción 2</Text>
-        <Text style={styles.drawerText}>Opción 3</Text>
       </Animated.View>
     </View>
   );
@@ -161,8 +191,8 @@ const styles = StyleSheet.create({
   },
   menuButton: {
     position: "absolute",
-    top: 20,
-    left: 10, // Ícono a la izquierda de la pantalla
+    top: 0,
+    left: 0, // Ícono a la izquierda de la pantalla
     padding: 10,
     backgroundColor: "blue",
     borderRadius: 5,
@@ -178,18 +208,25 @@ const styles = StyleSheet.create({
     top: 0, // Mantener el menú alineado con la parte superior
     width: width / 2, // Menú ocupa la mitad del ancho de la pantalla
     height: "100%", // Ocupa todo el alto
-    backgroundColor: "rgba(255, 255, 255, 0.8)", // Fondo blanco con opacidad del 80%
+    backgroundColor: "rgba(110, 144, 231, 0.8)", // Fondo blanco con opacidad del 80%
     elevation: 10, // Sombra en Android
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 }, // Sombra en iOS
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    paddingHorizontal: 20,
-    paddingVertical: 20, // Espacio interno
+    //paddingHorizontal: 20,
+    //paddingVertical: 20, // Espacio interno
     zIndex: 105, // Garantiza que esté encima del contenido principal
+    borderWidth: 0,
   },
   closeButton: {
     alignSelf: "flex-end", // Botón de cierre en la esquina superior derecha del menú
+  },
+  titleMenu: {
+    alignSelf: "flex-start", // Botón de cierre en la esquina superior derecha del menú
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
   },
   closeText: {
     fontSize: 18,
@@ -197,5 +234,7 @@ const styles = StyleSheet.create({
   drawerText: {
     fontSize: 18,
     marginVertical: 10,
+    paddingHorizontal: 20,
+    color: "white",
   },
 });
