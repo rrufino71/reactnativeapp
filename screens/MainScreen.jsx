@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Animated,
   Dimensions,
+  ImageBackground,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NotificationArea } from "../components/NotificationArea";
@@ -47,46 +48,56 @@ export default function MainScreen({ navigation }) {
   }, [dataSession]);
 
   return (
-    <View
-      style={{
-        paddingTop: insets.top, // Aplica el margen superior
-        paddingBottom: insets.bottom, // Aplica el margen inferior
-        //paddingLeft: insets.left, // Aplica el margen izquierdo
-        //paddingRight: insets.right, // Aplica el margen derecho
-        //backgroundColor: "rgba(175, 176, 227, 0.3)",
-      }}
-      className={`flex-1 justify-center items-center bg-${
-        usuario && usuario.colorScheme
-      }-back`}
+    <ImageBackground
+      source={require("../assets/fondo1.jpg")} // Ruta de la imagen
+      style={styles.backgroundImage}
+      resizeMode="cover" // Ajuste de la imagen (cover, contain, etc.)
     >
-      <BorderMenu navigation={navigation} />
+      <View
+        style={{
+          paddingTop: insets.top, // Aplica el margen superior
+          paddingBottom: insets.bottom, // Aplica el margen inferior
+          //paddingLeft: insets.left, // Aplica el margen izquierdo
+          //paddingRight: insets.right, // Aplica el margen derecho
+          //backgroundColor: "rgba(175, 176, 227, 0.3)",
+        }}
+        className={`flex-1 justify-center items-center bg-${
+          usuario && usuario.colorScheme
+        }-back`}
+      >
+        {/* Contenido superpuesto */}
 
-      {/* <Button title="Go to About" onPress={() => navigation.replace("About")} /> */}
-      {/* Texto que también navega a DetailsScreen */}
-      {/* <Text
+        <BorderMenu navigation={navigation} />
+
+        {/* <Button title="Go to About" onPress={() => navigation.replace("About")} /> */}
+        {/* Texto que también navega a DetailsScreen */}
+        {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => navigation.navigate("About")}
-      > 
+        > 
         About
-      </Text> */}
-      {/* <Text
+        </Text> */}
+        {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => navigation.navigate("Contacto")}
-      >
+        >
         Contacto
-      </Text> */}
-      {/* <Text
+        </Text> */}
+        {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => {
           fetchUserData("usuario");
-        }}
-      >
-        Load Data
-      </Text> */}
-      {/* <Biometrics /> */}
+          }}
+          >
+          Load Data
+          </Text> */}
+        {/* <Biometrics /> */}
 
-      {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
-    </View>
+        {mensaje && (
+          <NotificationArea notificacion={mensaje}></NotificationArea>
+        )}
+      </View>
+    </ImageBackground>
   );
 }
 
@@ -259,5 +270,10 @@ const styles = StyleSheet.create({
     marginVertical: 5, // Espaciado vertical
     width: "100%", // Ancho de la línea
     alignSelf: "center", // Centrar la línea
+  },
+  backgroundImage: {
+    flex: 1, // Ocupar todo el espacio disponible
+    justifyContent: "center", // Centrar verticalmente el contenido
+    alignItems: "center", // Centrar horizontalmente el contenido
   },
 });
