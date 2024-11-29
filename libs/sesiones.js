@@ -49,10 +49,10 @@ async function removeData(key) {
 export async function fetchUserData(key) {
   const session = await loadData(key); // Reemplaza 'userData' con la clave que guardaste
   if (session) {
-    //console.log("Datos del usuario:", session);
+    console.log("Datos del usuario:", session);
     return session;
   } else {
-    //console.log("No se encontraron datos.");
+    console.log("No se encontraron datos.");
     return null;
   }
 }

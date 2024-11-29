@@ -61,29 +61,29 @@ export default function MainScreen({ navigation }) {
     >
       <BorderMenu navigation={navigation} />
 
-      <Button title="Go to About" onPress={() => navigation.replace("About")} />
+      {/* <Button title="Go to About" onPress={() => navigation.replace("About")} /> */}
       {/* Texto que también navega a DetailsScreen */}
-      <Text
+      {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => navigation.navigate("About")}
-      >
+      > 
         About
-      </Text>
-      <Text
+      </Text> */}
+      {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => navigation.navigate("Contacto")}
       >
         Contacto
-      </Text>
-      <Text
+      </Text> */}
+      {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => {
           fetchUserData("usuario");
         }}
       >
         Load Data
-      </Text>
-      <Biometrics />
+      </Text> */}
+      {/* <Biometrics /> */}
 
       {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
     </View>
@@ -146,17 +146,9 @@ function BorderMenu({ navigation }) {
       <Animated.View
         style={[styles.drawer, { transform: [{ translateX }], opacity }]}
       >
-        <View
-          style={{
-            backgroundColor: "rgba(4, 55, 186,0.8)",
-            margin: 0,
-            padding: 15,
-            width: "100%",
-          }}
-        >
+        <View style={styles.containerTitleView}>
           <Text style={styles.titleMenu}>Menu</Text>
         </View>
-
         {/* <TouchableOpacity onPress={toggleMenu} style={styles.closeButton}>
           <Text style={styles.closeText}>✕</Text>
         </TouchableOpacity> */}
@@ -169,9 +161,27 @@ function BorderMenu({ navigation }) {
         >
           Contacto
         </Text>
-        <Text style={styles.drawerText}>About</Text>
-        <Text style={styles.drawerText}>Load Data</Text>
-        <Text style={styles.drawerText}>Autenticar con Huella</Text>
+        <View style={styles.divider} />
+        <Text
+          style={styles.drawerText}
+          onPress={() => {
+            navigation.navigate("About");
+            toggleMenu(); // Cierra el menú después de navegar
+          }}
+        >
+          About
+        </Text>
+        <View style={styles.divider} />
+        <Text
+          style={styles.drawerText}
+          onPress={() => {
+            fetchUserData("usuario");
+            toggleMenu(); // Cierra el menú después de navegar
+          }}
+        >
+          Load Data
+        </Text>
+        <View style={styles.divider} />
         <TouchableOpacity onPress={toggleMenu}>
           <Text style={styles.drawerText}>Cerrar</Text>
         </TouchableOpacity>
@@ -189,12 +199,18 @@ const styles = StyleSheet.create({
     height: "100%",
     zIndex: 100, // Asegura que todo esté encima de otros elementos
   },
+  containerTitleView: {
+    backgroundColor: "rgba(4, 55, 186,0.8)",
+    margin: 0,
+    padding: 15,
+    width: "100%",
+  },
   menuButton: {
     position: "absolute",
     top: 0,
     left: 0, // Ícono a la izquierda de la pantalla
     padding: 10,
-    backgroundColor: "blue",
+    backgroundColor: "rgba(142, 167, 232,0.8)",
     borderRadius: 5,
     zIndex: 110, // El botón está por encima incluso del menú
   },
@@ -236,5 +252,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 20,
     color: "white",
+  },
+  divider: {
+    height: 1, // Grosor de la línea
+    backgroundColor: "#fff", // Color de la línea
+    marginVertical: 5, // Espaciado vertical
+    width: "100%", // Ancho de la línea
+    alignSelf: "center", // Centrar la línea
   },
 });
