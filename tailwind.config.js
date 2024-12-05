@@ -11,7 +11,7 @@ module.exports = {
     extend: {
       colors: {
         customColor1: {
-          back: "#b4d7f9",
+          back: "#c0c5ca",
           title: "white",
           labels: "black",
           inputs: "grey",

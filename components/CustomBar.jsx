@@ -80,15 +80,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    //backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     height: 60,
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
-    paddingBottom: 5, // Padding para centrar los iconos verticalmente
-    paddingTop: 5,
+    //borderTopWidth: 1,
+    //borderTopColor: "#ddd",
+    //paddingBottom: 5, // Padding para centrar los iconos verticalmente
+    //paddingTop: 5,
+    //backgroundColor: "rgba(255,255,255,0.5)",
   },
   tabButton: {
     alignItems: "center",

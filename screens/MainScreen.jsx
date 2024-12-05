@@ -48,42 +48,41 @@ export default function MainScreen({ navigation }) {
   }, [dataSession]);
 
   return (
-    <ImageBackground
-      source={require("../assets/fondo1.jpg")} // Ruta de la imagen
-      style={styles.backgroundImage}
-      resizeMode="cover" // Ajuste de la imagen (cover, contain, etc.)
+    // <ImageBackground
+    //   source={require("../assets/fondo1.jpg")} // Ruta de la imagen
+    //   resizeMode="cover" // Ajuste de la imagen (cover, contain, etc.)
+    // >
+    <View
+      style={{
+        paddingTop: insets.top, // Aplica el margen superior
+        paddingBottom: insets.bottom, // Aplica el margen inferior
+        //paddingLeft: insets.left, // Aplica el margen izquierdo
+        //paddingRight: insets.right, // Aplica el margen derecho
+        //backgroundColor: "rgba(175, 176, 227, 0.3)",
+      }}
+      className={`flex-1 justify-center items-center bg-${
+        usuario && usuario.colorScheme
+      }-back`}
     >
-      <View
-        style={{
-          paddingTop: insets.top, // Aplica el margen superior
-          paddingBottom: insets.bottom, // Aplica el margen inferior
-          //paddingLeft: insets.left, // Aplica el margen izquierdo
-          //paddingRight: insets.right, // Aplica el margen derecho
-          //backgroundColor: "rgba(175, 176, 227, 0.3)",
-        }}
-        className={`flex-1 justify-center items-center bg-${
-          usuario && usuario.colorScheme
-        }-back`}
-      >
-        {/* Contenido superpuesto */}
+      {/* Contenido superpuesto */}
 
-        <BorderMenu navigation={navigation} />
+      <BorderMenu navigation={navigation} />
 
-        {/* <Button title="Go to About" onPress={() => navigation.replace("About")} /> */}
-        {/* Texto que también navega a DetailsScreen */}
-        {/* <Text
+      {/* <Button title="Go to About" onPress={() => navigation.replace("About")} /> */}
+      {/* Texto que también navega a DetailsScreen */}
+      {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => navigation.navigate("About")}
         > 
         About
         </Text> */}
-        {/* <Text
+      {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => navigation.navigate("Contacto")}
         >
         Contacto
         </Text> */}
-        {/* <Text
+      {/* <Text
         style={{ color: "blue", marginTop: 20 }}
         onPress={() => {
           fetchUserData("usuario");
@@ -91,13 +90,11 @@ export default function MainScreen({ navigation }) {
           >
           Load Data
           </Text> */}
-        {/* <Biometrics /> */}
+      {/* <Biometrics /> */}
 
-        {mensaje && (
-          <NotificationArea notificacion={mensaje}></NotificationArea>
-        )}
-      </View>
-    </ImageBackground>
+      {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
+    </View>
+    // </ImageBackground>
   );
 }
 
@@ -143,7 +140,7 @@ function BorderMenu({ navigation }) {
     <View
       style={[
         styles.containerMenu,
-        menuVisible ? { zIndex: 100 } : { zIndex: -1, height: 0, width: 0 },
+        //menuVisible ? { zIndex: 100 } : { zIndex: -1, height: 0, width: 0 },
       ]}
     >
       {/* Botón del menú - visible solo cuando el menú está cerrado */}
@@ -161,7 +158,7 @@ function BorderMenu({ navigation }) {
           <Text style={styles.titleMenu}>Menu</Text>
         </View>
         <Text
-          style={styles.drawerText}
+          style={[styles.drawerText]}
           onPress={() => {
             navigation.navigate("Contacto");
             toggleMenu(); // Cierra el menú después de navegar
@@ -212,20 +209,20 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0, // Ícono en la esquina superior izquierda
     padding: 10,
-    backgroundColor: "rgba(142, 167, 232, 0.8)",
     borderRadius: 5,
     zIndex: 110, // Asegura que el botón esté encima del menú
   },
   menuText: {
     color: "white",
-    fontSize: 18,
+    fontSize: 32,
+    fontWeight: "bold",
   },
   drawer: {
     position: "absolute",
     top: 0,
     left: 0,
     width: width / 2,
-    //height: "100%",
+    height: "100%",
     elevation: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -235,7 +232,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(110, 144, 231, 0.8)",
   },
   containerTitleView: {
-    backgroundColor: "rgba(4, 55, 186, 0.8)",
+    backgroundColor: "rgba(60, 108, 232, 0.6)",
     padding: 15,
     width: "100%",
   },
@@ -246,9 +243,10 @@ const styles = StyleSheet.create({
   },
   drawerText: {
     fontSize: 18,
-    marginVertical: 10,
+    marginVertical: 0,
     paddingHorizontal: 20,
-    color: "white",
+    color: "#fff",
+    paddingVertical: 15,
   },
   divider: {
     height: 1,
@@ -256,5 +254,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     width: "100%",
     alignSelf: "center",
+    marginBottom: 0,
+    marginTop: 0,
   },
 });

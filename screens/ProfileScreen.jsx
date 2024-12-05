@@ -204,8 +204,13 @@ export default function ProfileScreen() {
           // className={`flex-1 justify-center items-center ${
           //   usuario ? "bg-" + usuario.colorScheme + "-back" : ""
           // }`}
-          className="flex-1 justify-center items-center bg-customColor1-back"
-          contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+          className="bg-customColor1-back"
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: 100,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
           keyboardShouldPersistTaps="handled"
         >
           <View
