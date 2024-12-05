@@ -13,7 +13,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
 import { fetchUserData } from "../libs/sesiones";
-import Biometrics from "../components/Biometrics";
 import { MenuIcon } from "../components/Icons";
 
 const { width } = Dimensions.get("window"); // Obtener ancho de la pantalla
@@ -90,7 +89,6 @@ export default function MainScreen({ navigation }) {
           >
           Load Data
           </Text> */}
-      {/* <Biometrics /> */}
 
       {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
     </View>

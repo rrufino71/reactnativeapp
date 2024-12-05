@@ -1,10 +1,9 @@
-import {Text,View} from 'react-native';
+import { Text, View } from "react-native";
 
 export default function SettingsScreen() {
-return(
+  return (
     <View className="justify-center">
-        <Text>Settings Screen</Text>
+      <Text>Settings Screen</Text>
     </View>
-)
-
+  );
 }
