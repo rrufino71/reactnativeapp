@@ -1,20 +1,19 @@
+import React, { useEffect, useState } from "react";
+import { Alert, Button, Text, View } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
-import { Alert, Button, View } from "react-native";
 
 export default function Biometrics() {
-  const authenticate = async () => {
-    const isBiometricSupported = await LocalAuthentication.hasHardwareAsync();
-    if (!isBiometricSupported) {
-      Alert.alert(
-        "Error",
-        "La autenticación biométrica no está soportada en este dispositivo."
-      );
-      console.log(
-        "La autenticación biométrica no está soportada en este dispositivo."
-      );
-      return;
-    }
+  const [isBiometricSupported, setIsBiometricSupported] = useState(false);
 
+  useEffect(() => {
+    (async () => {
+      // Verificar si el hardware soporta biometría
+      const compatible = await LocalAuthentication.hasHardwareAsync();
+      setIsBiometricSupported(compatible);
+    })();
+  }, []); // Array vacío para que se ejecute una sola vez
+
+  const handleBiometricAuth = async () => {
     const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
     if (!savedBiometrics) {
       Alert.alert(
@@ -25,7 +24,7 @@ export default function Biometrics() {
     }
 
     const result = await LocalAuthentication.authenticateAsync({
-      promptMessage: "Autenticación requerida",
+      promptMessage: "Confirme su identidad",
       fallbackLabel: "Usar contraseña",
     });
 
@@ -38,7 +37,17 @@ export default function Biometrics() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Button title="Autenticarse con huella" onPress={authenticate} />
+      <Text>
+        {isBiometricSupported
+          ? "El dispositivo admite biometría."
+          : "El dispositivo no admite biometría."}
+      </Text>
+      {isBiometricSupported && (
+        <Button
+          title="Autenticarse con biometría"
+          onPress={handleBiometricAuth}
+        />
+      )}
     </View>
   );
 }

@@ -21,6 +21,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { removeUserData, saveUserData } from "../libs/sesiones";
+import Biometrics from "../components/Biometrics";
 
 export default function ProfileScreen() {
   const {
@@ -220,6 +221,7 @@ export default function ProfileScreen() {
               marginTop: 40,
             }}
           >
+            <Biometrics />
             <Text
               style={{
                 textAlign: "center",
