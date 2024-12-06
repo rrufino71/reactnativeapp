@@ -17,11 +17,12 @@ import { AuthContext } from "../contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { Visibility, VisibilityOff } from "../components/Icons";
 import { saveUserData } from "../libs/sesiones";
+import { getSecureData, storeSecureData } from "../libs/secureStorage.js";
 
 export default function LoginScreen() {
   const initialData = {
-    email: "rrufino71@gmail.com",
-    password: "12345678",
+    email: "",
+    password: "",
     errors: {},
   };
 
@@ -64,6 +65,8 @@ export default function LoginScreen() {
 
   const [response, setResponse] = useState(null);
   const [ocultaPass, setOcultaPass] = useState(true);
+  const [savedUser, setSavedUser] = useState(null);
+  const [savedPass, setSavedPass] = useState(null);
 
   const {
     isAuthenticated,
@@ -100,6 +103,8 @@ export default function LoginScreen() {
         setIsAuthenticated(true);
         //setUsuarioNombre(datosUsuario.name);
         saveUserData("usuario", datosUsuario);
+        storeSecureData("user", form.email);
+        storeSecureData("pass", form.password);
 
         navigation.replace("Home");
       } else {
@@ -114,6 +119,28 @@ export default function LoginScreen() {
   const togglePasswordVisibility = () => {
     setOcultaPass(!ocultaPass);
   };
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const storedUser = await getSecureData("user");
+      if (storedUser) {
+        setSavedUser(storedUser);
+      }
+      const storedPass = await getSecureData("pass");
+      if (storedPass) {
+        setSavedPass(storedPass);
+      }
+    };
+    loadUser();
+  }, []);
+
+  useEffect(() => {
+    handleChange("email", savedUser);
+  }, [savedUser]);
+
+  useEffect(() => {
+    handleChange("password", savedPass);
+  }, [savedPass]);
 
   return (
     <>
