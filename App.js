@@ -16,6 +16,7 @@ import MainScreen from "./screens/MainScreen";
 import ContactoScreen from "./screens/ContactoScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import HuellaScreen from "./screens/HuellaScreen";
 import CustomTabBar from "./components/CustomBar";
 import CustomStatusBar from "./components/CustomStatusBar";
 import RegisterScreen from "./screens/RegisterScreen";
@@ -66,6 +67,11 @@ export default function App() {
             <Stack.Screen
               name="Login"
               component={LoginScreen}
+              options={{ headerShown: false, gestureEnabled: true }}
+            />
+            <Stack.Screen
+              name="Huella"
+              component={HuellaScreen}
               options={{ headerShown: false, gestureEnabled: true }}
             />
             <Stack.Screen

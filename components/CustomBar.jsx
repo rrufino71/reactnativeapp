@@ -2,7 +2,13 @@ import React, { useState, useContext } from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native"; // Importa el hook de navegación
-import { HomeIcon, ProfileIcon, SettingsIcon, SignInIcon } from "./Icons.jsx";
+import {
+  HomeIcon,
+  ProfileIcon,
+  SettingsIcon,
+  SignInIcon,
+  FingerIcon,
+} from "./Icons.jsx";
 import { AuthContext } from "../contexts/AuthContext";
 
 export default function CustomTabBar({ isKeyboardVisible }) {
@@ -68,6 +74,15 @@ export default function CustomTabBar({ isKeyboardVisible }) {
         >
           <ProfileIcon />
           <Text style={styles.tabLabel}>Login</Text>
+        </TouchableOpacity>
+      )}
+      {!isAuthenticated && (
+        <TouchableOpacity
+          style={styles.tabButton}
+          onPress={() => navigation.navigate("Huella")}
+        >
+          <FingerIcon />
+          <Text style={styles.tabLabel}>Huella</Text>
         </TouchableOpacity>
       )}
     </View>

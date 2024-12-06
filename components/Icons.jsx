@@ -31,3 +31,7 @@ export const VisibilityOff = (props) => (
 export const MenuIcon = (props) => (
   <MaterialIcons name="menu" size={24} color="black" {...props} />
 );
+
+export const FingerIcon = (props) => (
+  <MaterialIcons name="fingerprint" size={24} color="black" {...props} />
+);
