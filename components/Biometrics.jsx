@@ -1,10 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Alert, Button, Text, View } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
 import { getSecureData, storeSecureData } from "../libs/secureStorage.js";
+import { getLogin } from "../libs/auth.js";
+import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function Biometrics() {
   const [isBiometricSupported, setIsBiometricSupported] = useState(false);
+  const [huellaOk, setHuellaOk] = useState(false);
+  const [storedUser, setStoredUser] = useState("");
+  const [storedPass, setStoredPass] = useState("");
+  const {
+    isAuthenticated,
+    mensaje,
+    setMensaje,
+    setIsAuthenticated,
+    usuarioNombre,
+    setUsuarioNombre,
+    tipoMensaje,
+    setTipoMensaje,
+    usuario,
+    setUsuario,
+  } = useContext(AuthContext);
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -30,42 +49,61 @@ export default function Biometrics() {
     });
 
     if (result.success) {
-      //Alert.alert("Éxito", "Autenticación completada.");
-
-      const storedUser = await getSecureData("user");
-      const storedPass = await getSecureData("pass");
-      console.log("storeUser:", storedUser);
-      const result = await getLogin({
-        email: storedUser,
-        password: storedPass,
-      });
-      setResponse(result);
-      if (result.status) {
-        console.log("result:", result);
-        const datosUsuario = {
-          ...result.data,
-          token: result.token,
-          mensaje: result.mensaje,
-          colorScheme: "customColor1", //agregar a la api
-        };
-        setUsuario(datosUsuario);
-        setTipoMensaje(2);
-        setMensaje(result.message);
-        setIsAuthenticated(true);
-        saveUserData("usuario", datosUsuario);
-        storeSecureData("user", form.email);
-        storeSecureData("pass", form.password);
-        navigation.replace("Home");
-      } else {
-        //Alert.alert(`Bienvenido ${result.message}, logueo fail`);
-        //console.log("error:", result.message);
-        setTipoMensaje(1);
-        setMensaje(result.message);
-      }
+      Alert.alert("Éxito", "Autenticación completada.");
+      setHuellaOk(true);
     } else {
       Alert.alert("Error", "La autenticación falló.");
+      setHuellaOk(false);
     }
   };
+
+  useEffect(() => {
+    if (huellaOk) {
+      console.log("huellaok true:", huellaOk);
+      let result = null;
+      const logueo = async () => {
+        const xstoredUser = await getSecureData("user");
+        const xstoredPass = await getSecureData("pass");
+        setStoredUser(xstoredUser);
+        setStoredPass(xstoredPass);
+        console.log("storeUser:", xstoredUser);
+        console.log("storePass:", xstoredPass);
+      };
+      logueo();
+    } else {
+      console.log("huellaok false:", huellaOk);
+    }
+  }, [huellaOk]);
+
+  useEffect(() => {
+    if (storedPass != "" || storedPass != "") {
+      const login = async () => {
+        console.log("vamos a hacer la peticion del token");
+        const resultado = await getLogin({
+          email: storedUser,
+          password: storedPass,
+        });
+        if (resultado.status) {
+          const datosUsuario = {
+            ...resultado.data,
+            token: resultado.token,
+            mensaje: resultado.mensaje,
+            colorScheme: "customColor1", //agregar a la api
+          };
+          setUsuario(datosUsuario);
+          setTipoMensaje(2);
+          setMensaje(resultado.message);
+          setIsAuthenticated(true);
+          saveUserData("usuario", datosUsuario);
+          navigation.replace("Home");
+        } else {
+          setTipoMensaje(1);
+          setMensaje(resultado.message);
+        }
+      };
+      login();
+    }
+  }, [storedUser, storedPass]);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
