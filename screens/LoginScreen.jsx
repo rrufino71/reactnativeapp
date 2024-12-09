@@ -105,7 +105,6 @@ export default function LoginScreen() {
         saveUserData("usuario", datosUsuario);
         storeSecureData("user", form.email);
         storeSecureData("pass", form.password);
-
         navigation.replace("Home");
       } else {
         //Alert.alert(`Bienvenido ${result.message}, logueo fail`);

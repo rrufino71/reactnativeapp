@@ -13,15 +13,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 export default function CustomTabBar({ isKeyboardVisible }) {
   const navigation = useNavigation(); // Obtén la función de navegación
-  const {
-    isAuthenticated,
-    mensaje,
-    setMensaje,
-    usuarioNombre,
-    setIsAuthenticated,
-    setUsuarioNombre,
-    usuario,
-  } = useContext(AuthContext);
+  const { isAuthenticated, usuario } = useContext(AuthContext);
 
   if (isKeyboardVisible) {
     return null; // No renderizar nada

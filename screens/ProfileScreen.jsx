@@ -46,22 +46,32 @@ export default function ProfileScreen() {
   };
 
   useEffect(() => {
-    if (!usuario) return;
-    initialData = {
-      name: usuario.name,
-      email: usuario.email,
-      telefono: usuario.telefono,
-      cumple: usuario.cumple,
-      errors: {},
+    const datos = () => {
+      try {
+        initialData = {
+          name: usuario.name,
+          email: usuario.email,
+          telefono: usuario.telefono,
+          cumple: usuario.cumple,
+          errors: {},
+        };
+        setForm({
+          name: usuario.name,
+          email: usuario.email,
+          telefono: usuario.telefono,
+          cumple: usuario.cumple,
+        });
+        saveUserData("usuario", usuario);
+        console.log("usuario guardado");
+      } catch (error) {
+        console.error("Error en la autenticación:", error);
+        setMensaje("Error al conectar con el servidor.");
+        setIsAuthenticated(false);
+      }
     };
-    setForm({
-      name: usuario.name,
-      email: usuario.email,
-      telefono: usuario.telefono,
-      cumple: usuario.cumple,
-    });
-
-    saveUserData("usuario", usuario);
+    if (usuario) {
+      datos();
+    }
   }, [usuario]);
 
   const onValidate = (form) => {

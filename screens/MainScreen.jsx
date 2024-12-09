@@ -20,43 +20,34 @@ const { width } = Dimensions.get("window"); // Obtener ancho de la pantalla
 export default function MainScreen({ navigation }) {
   const insets = useSafeAreaInsets();
 
-  const { mensaje, setUsuario, setIsAuthenticated, usuario } =
+  const { mensaje, setUsuario, setIsAuthenticated, usuario, isAuthenticated } =
     useContext(AuthContext);
   const [dataSession, setDataSession] = useState(null);
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     async function tomaDatos() {
-      //console.log("Tomando datos de usuario");
-      const session = await fetchUserData("usuario"); // Reemplaza 'userData' con la clave que guardaste
-      if (session) {
-        //console.log("Datos del usuario:", session);
-        setDataSession(session);
-      }
+      const xsession = await fetchUserData("usuario"); // Reemplaza 'userData' con la clave que guardaste
+      console.log("Tomando datos de usuario: ", xsession);
+      setSession(xsession);
     }
     tomaDatos();
   }, []);
 
   useEffect(() => {
-    if (dataSession) {
-      setUsuario(dataSession);
+    console.log("guardamos session: ", session);
+    if (session) {
+      setUsuario(session);
       setIsAuthenticated(true);
-    } else {
-      setUsuario(null);
-      setIsAuthenticated(false);
+      setDataSession(session);
     }
-  }, [dataSession]);
+  }, [session]);
 
   return (
-    // <ImageBackground
-    //   source={require("../assets/fondo1.jpg")} // Ruta de la imagen
-    //   resizeMode="cover" // Ajuste de la imagen (cover, contain, etc.)
-    // >
     <View
       style={{
         paddingTop: insets.top, // Aplica el margen superior
         paddingBottom: insets.bottom, // Aplica el margen inferior
-        //paddingLeft: insets.left, // Aplica el margen izquierdo
-        //paddingRight: insets.right, // Aplica el margen derecho
         backgroundColor: "rgba(0, 72, 142,0.5)",
       }}
       className={`flex-1 justify-center items-center bg-${
@@ -66,29 +57,6 @@ export default function MainScreen({ navigation }) {
       {/* Contenido superpuesto */}
 
       <BorderMenu navigation={navigation} />
-
-      {/* <Button title="Go to About" onPress={() => navigation.replace("About")} /> */}
-      {/* Texto que también navega a DetailsScreen */}
-      {/* <Text
-        style={{ color: "blue", marginTop: 20 }}
-        onPress={() => navigation.navigate("About")}
-        > 
-        About
-        </Text> */}
-      {/* <Text
-        style={{ color: "blue", marginTop: 20 }}
-        onPress={() => navigation.navigate("Contacto")}
-        >
-        Contacto
-        </Text> */}
-      {/* <Text
-        style={{ color: "blue", marginTop: 20 }}
-        onPress={() => {
-          fetchUserData("usuario");
-          }}
-          >
-          Load Data
-          </Text> */}
 
       {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
     </View>

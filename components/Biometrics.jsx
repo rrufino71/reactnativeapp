@@ -5,6 +5,7 @@ import { getSecureData, storeSecureData } from "../libs/secureStorage.js";
 import { getLogin } from "../libs/auth.js";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../contexts/AuthContext";
+import { saveUserData } from "../libs/sesiones";
 
 export default function Biometrics() {
   const [isBiometricSupported, setIsBiometricSupported] = useState(false);
@@ -58,32 +59,34 @@ export default function Biometrics() {
   };
 
   useEffect(() => {
-    if (huellaOk) {
-      console.log("huellaok true:", huellaOk);
-      let result = null;
-      const logueo = async () => {
+    const logueo = async () => {
+      if (huellaOk) {
+        console.log("huellaOk true:", huellaOk);
         const xstoredUser = await getSecureData("user");
         const xstoredPass = await getSecureData("pass");
-        setStoredUser(xstoredUser);
-        setStoredPass(xstoredPass);
-        console.log("storeUser:", xstoredUser);
-        console.log("storePass:", xstoredPass);
-      };
-      logueo();
-    } else {
-      console.log("huellaok false:", huellaOk);
-    }
+
+        if (xstoredUser && xstoredPass) {
+          setStoredUser(xstoredUser);
+          setStoredPass(xstoredPass);
+        } else {
+          console.log("No se encontraron datos almacenados");
+        }
+      }
+    };
+
+    logueo();
   }, [huellaOk]);
 
   useEffect(() => {
-    if (storedPass != "" || storedPass != "") {
-      const login = async () => {
-        console.log("vamos a hacer la peticion del token");
+    const login = async () => {
+      try {
+        console.log("Intentando autenticar con biometría");
         const resultado = await getLogin({
           email: storedUser,
           password: storedPass,
         });
-        if (resultado.status) {
+
+        if (resultado?.status) {
           const datosUsuario = {
             ...resultado.data,
             token: resultado.token,
@@ -93,17 +96,25 @@ export default function Biometrics() {
           setUsuario(datosUsuario);
           setTipoMensaje(2);
           setMensaje(resultado.message);
+          await saveUserData("usuario", datosUsuario); // Asegúrate de que sea await si es async
           setIsAuthenticated(true);
-          saveUserData("usuario", datosUsuario);
           navigation.replace("Home");
         } else {
           setTipoMensaje(1);
           setMensaje(resultado.message);
+          setIsAuthenticated(false);
         }
-      };
+      } catch (error) {
+        console.error("Error en la autenticación:", error);
+        setMensaje("Error al conectar con el servidor.");
+        setIsAuthenticated(false);
+      }
+    };
+
+    if (huellaOk && storedUser && storedPass) {
       login();
     }
-  }, [storedUser, storedPass]);
+  }, [storedUser, storedPass, huellaOk]);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
