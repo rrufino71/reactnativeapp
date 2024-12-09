@@ -60,6 +60,7 @@ export default function MainScreen({ navigation }) {
 
       {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
     </View>
+
     // </ImageBackground>
   );
 }
