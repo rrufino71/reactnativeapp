@@ -28,14 +28,14 @@ export default function MainScreen({ navigation }) {
   useEffect(() => {
     async function tomaDatos() {
       const xsession = await fetchUserData("usuario"); // Reemplaza 'userData' con la clave que guardaste
-      console.log("Tomando datos de usuario: ", xsession);
+      // console.log("Tomando datos de usuario: ", xsession);
       setSession(xsession);
     }
     tomaDatos();
   }, []);
 
   useEffect(() => {
-    console.log("guardamos session: ", session);
+    //console.log("guardamos session: ", session);
     if (session) {
       setUsuario(session);
       setIsAuthenticated(true);

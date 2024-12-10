@@ -12,18 +12,8 @@ export default function Biometrics() {
   const [huellaOk, setHuellaOk] = useState(false);
   const [storedUser, setStoredUser] = useState("");
   const [storedPass, setStoredPass] = useState("");
-  const {
-    isAuthenticated,
-    mensaje,
-    setMensaje,
-    setIsAuthenticated,
-    usuarioNombre,
-    setUsuarioNombre,
-    tipoMensaje,
-    setTipoMensaje,
-    usuario,
-    setUsuario,
-  } = useContext(AuthContext);
+  const { setMensaje, setIsAuthenticated, setTipoMensaje, setUsuario } =
+    useContext(AuthContext);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -50,10 +40,10 @@ export default function Biometrics() {
     });
 
     if (result.success) {
-      Alert.alert("Éxito", "Autenticación completada.");
+      //Alert.alert("Éxito", "Autenticación completada.");
       setHuellaOk(true);
     } else {
-      Alert.alert("Error", "La autenticación falló.");
+      //Alert.alert("Error", "La autenticación falló.");
       setHuellaOk(false);
     }
   };
@@ -61,7 +51,7 @@ export default function Biometrics() {
   useEffect(() => {
     const logueo = async () => {
       if (huellaOk) {
-        console.log("huellaOk true:", huellaOk);
+        //console.log("huellaOk true:", huellaOk);
         const xstoredUser = await getSecureData("user");
         const xstoredPass = await getSecureData("pass");
 
@@ -69,7 +59,7 @@ export default function Biometrics() {
           setStoredUser(xstoredUser);
           setStoredPass(xstoredPass);
         } else {
-          console.log("No se encontraron datos almacenados");
+          //console.log("No se encontraron datos almacenados");
         }
       }
     };
@@ -80,7 +70,7 @@ export default function Biometrics() {
   useEffect(() => {
     const login = async () => {
       try {
-        console.log("Intentando autenticar con biometría");
+        //console.log("Intentando autenticar con biometría");
         const resultado = await getLogin({
           email: storedUser,
           password: storedPass,

@@ -1,41 +1,19 @@
-import { Text, View, Button } from "react-native";
-import {
-  getSecureData,
-  storeSecureData,
-  deleteSecureData,
-} from "../libs/secureStorage.js";
+import { React } from "react";
+import { View, Text, StyleSheet, Button } from "react-native";
 
 export default function SettingsScreen() {
   return (
-    <View className="justify-center">
+    <View style={styles.container}>
       <Text>Settings Screen</Text>
-      <Button
-        title="Graba Usuario"
-        onPress={async () => {
-          storeSecureData("user", "rrufino71@gmail.com");
-          storeSecureData("pass", "12345678");
-        }}
-      />
-
-      <Button
-        style={{ margin: 10 }}
-        title="Obtener Usuario"
-        onPress={async () => {
-          const xuser = await getSecureData("user");
-          const xpass = await getSecureData("pass");
-          console.log("user obtenido: ", xuser);
-          console.log("pass obtenida: ", xpass);
-        }}
-      />
-
-      <Button
-        style={{ margin: 10 }}
-        title="Borrar Usuario"
-        onPress={async () => {
-          deleteSecureData("user");
-          deleteSecureData("pass");
-        }}
-      />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

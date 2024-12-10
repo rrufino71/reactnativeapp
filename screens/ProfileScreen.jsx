@@ -62,7 +62,7 @@ export default function ProfileScreen() {
           cumple: usuario.cumple,
         });
         saveUserData("usuario", usuario);
-        console.log("usuario guardado");
+        //console.log("usuario guardado");
       } catch (error) {
         console.error("Error en la autenticación:", error);
         setMensaje("Error al conectar con el servidor.");
@@ -231,7 +231,6 @@ export default function ProfileScreen() {
               marginTop: 40,
             }}
           >
-            <Biometrics />
             <Text
               style={{
                 textAlign: "center",
