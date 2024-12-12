@@ -9,6 +9,12 @@ import {
   PanResponder,
 } from "react-native";
 import { AuthContext } from "../contexts/AuthContext";
+import {
+  SettingsIcon,
+  HomeIcon,
+  InfoIcon,
+  GroupsIcon,
+} from "../components/Icons";
 
 const { width } = Dimensions.get("window");
 
@@ -59,28 +65,69 @@ export default function MainScreen({ navigation }) {
           <Text
             style={[
               styles.menuText,
-              { borderBottomWidth: 3, borderBottomColor: "white" },
+              {
+                borderBottomWidth: 3,
+                borderBottomColor: "white",
+              },
             ]}
           >
             {usuario.name}
           </Text>
         )}
-
-        {/* settings*/}
-        {isAuthenticated && (
+        {/* acerca*/}
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <InfoIcon color="white" size={15} marginRight={8} />
           <TouchableOpacity
             onPress={() => {
               toggleMenu(false);
-              navigation.navigate("Settings");
+              navigation.navigate("About");
             }}
           >
-            <Text style={styles.menuItem}>Settings</Text>
+            <Text style={styles.menuItem}>Acerca</Text>
           </TouchableOpacity>
+        </View>
+
+        {/* contactos */}
+        {isAuthenticated && (
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <GroupsIcon color="white" size={15} marginRight={8} />
+            <TouchableOpacity
+              onPress={() => {
+                toggleMenu(false);
+                navigation.navigate("Contacto");
+              }}
+            >
+              <Text style={styles.menuItem}>Contactos</Text>
+            </TouchableOpacity>
+          </View>
         )}
 
-        <TouchableOpacity onPress={() => toggleMenu(false)}>
-          <Text style={styles.menuItem}>Cerrar</Text>
-        </TouchableOpacity>
+        {/* settings*/}
+        {isAuthenticated && (
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <SettingsIcon color="white" size={15} marginRight={8} />
+            <TouchableOpacity
+              onPress={() => {
+                toggleMenu(false);
+                navigation.navigate("Settings");
+              }}
+            >
+              <Text style={styles.menuItem}>Settings</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <HomeIcon color="white" size={15} marginRight={8} />
+          <TouchableOpacity
+            onPress={() => {
+              toggleMenu(false);
+              navigation.navigate("Home");
+            }}
+          >
+            <Text style={styles.menuItem}>Home</Text>
+          </TouchableOpacity>
+        </View>
       </Animated.View>
 
       {/* Contenido principal */}
@@ -121,7 +168,7 @@ const styles = StyleSheet.create({
   },
   menuItem: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 14,
     marginVertical: 10,
   },
   content: {

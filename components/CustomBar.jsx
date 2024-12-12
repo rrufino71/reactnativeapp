@@ -29,7 +29,7 @@ export default function CustomTabBar({ isKeyboardVisible }) {
         style={styles.tabButton}
         onPress={() => navigation.navigate("Home")}
       >
-        <HomeIcon />
+        <HomeIcon size={24} />
         <Text style={styles.tabLabel}>Home</Text>
       </TouchableOpacity>
 
@@ -39,7 +39,7 @@ export default function CustomTabBar({ isKeyboardVisible }) {
             style={styles.tabButton}
             onPress={() => navigation.navigate("Settings")}
           >
-            <SettingsIcon />
+            <SettingsIcon size={24} />
             <Text style={styles.tabLabel}>Settings</Text>
           </TouchableOpacity>
 
