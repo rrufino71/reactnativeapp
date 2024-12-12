@@ -49,7 +49,7 @@ export default function MainScreen({ navigation }) {
 
   const toggleMenu = (show) => {
     Animated.timing(translateX, {
-      toValue: show ? 0 : -width * 0.75,
+      toValue: show ? 0 : -width * 0.75, //ponerle 0.75 para que cierre todo
       duration: 300,
       useNativeDriver: true,
     }).start(() => setMenuVisible(show));
@@ -140,7 +140,7 @@ export default function MainScreen({ navigation }) {
             <Text style={styles.menuButtonText}>☰</Text>
           </TouchableOpacity>
         )}
-        <Text style={styles.contentText}>Contenido Principal</Text>
+        {/* <Text style={styles.contentText}>Contenido Principal</Text> */}
       </View>
     </View>
   );
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    width: width * 0.75,
+    width: width * 0.6,
     height: "100%",
     backgroundColor: "#333",
     padding: 20,

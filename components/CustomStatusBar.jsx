@@ -10,16 +10,23 @@ export default function CustomStatusBar() {
 
   return (
     <View style={[styles.statusBarContainer, { paddingTop: insets.top }]}>
-      <StatusBar style="dark" backgroundColor="white" />
+      {/* <StatusBar style="dark" backgroundColor="white" /> */}
 
       <View style={styles.barContent}>
-        <Image
+        {/* <Image
           source={require("../logo.png")}
           style={[styles.logo, { width: width / 4 }]}
           resizeMode="contain"
-        />
+        /> */}
 
-        <Text style={styles.titleText}>Clever FOX</Text>
+        <Text
+          style={[
+            styles.titleText,
+            { textAlign: "right", backgroundColor: "white" },
+          ]}
+        >
+          CLEVER FOX
+        </Text>
 
         <View style={{ width: width / 4 }} />
       </View>
@@ -35,12 +42,14 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd", // Color de la línea
   },
   barContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between", // Distribuir los elementos en la barra
-    width: "100%", // Para que ocupe todo el ancho de la pantalla
-    paddingHorizontal: 10, // Espaciado horizontal para los elementos
+    //flexDirection: "row",
+    //alignItems: "right",
+    justifyContent: "flex-end", // Distribuir los elementos en la barra
+    //marginLeft: "auto",
+    //width: "100%", // Para que ocupe todo el ancho de la pantalla
+    paddingHorizontal: 15, // Espaciado horizontal para los elementos
     paddingTop: 20,
+    //backgroundColor: "red",
   },
   logo: {
     height: 60, // Tamaño del logo
@@ -49,7 +58,7 @@ const styles = StyleSheet.create({
     fontSize: 30, // Tamaño del texto
     fontWeight: "bold", // Fuente en negrita
     color: "black", // Color del texto
-    textAlign: "center", // Asegura que el texto esté centrado
-    flex: 1, // Permite que el texto se expanda y se quede en el centro
+    //textAlign: "center", // Asegura que el texto esté centrado
+    //flex: 1, // Permite que el texto se expanda y se quede en el centro
   },
 });
