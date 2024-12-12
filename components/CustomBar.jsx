@@ -53,7 +53,8 @@ export default function CustomTabBar({ isKeyboardVisible }) {
           >
             <SignInIcon />
             <Text style={styles.tabLabel}>
-              {usuario ? usuario.name : "usuario"}
+              {/* usuario ? usuario.name : "usuario" */}
+              Perfil
             </Text>
           </TouchableOpacity>
         </>

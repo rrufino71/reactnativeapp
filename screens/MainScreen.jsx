@@ -1,227 +1,144 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   View,
-  StyleSheet,
-  Button,
   Text,
+  StyleSheet,
   TouchableOpacity,
   Animated,
   Dimensions,
-  ImageBackground,
+  PanResponder,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { NotificationArea } from "../components/NotificationArea";
 import { AuthContext } from "../contexts/AuthContext";
-import { fetchUserData } from "../libs/sesiones";
-import { MenuIcon } from "../components/Icons";
 
-const { width } = Dimensions.get("window"); // Obtener ancho de la pantalla
+const { width } = Dimensions.get("window");
 
 export default function MainScreen({ navigation }) {
-  const insets = useSafeAreaInsets();
-
-  const { mensaje, setUsuario, setIsAuthenticated, usuario, isAuthenticated } =
-    useContext(AuthContext);
-  const [dataSession, setDataSession] = useState(null);
-  const [session, setSession] = useState(null);
-
-  useEffect(() => {
-    async function tomaDatos() {
-      const xsession = await fetchUserData("usuario"); // Reemplaza 'userData' con la clave que guardaste
-      // console.log("Tomando datos de usuario: ", xsession);
-      setSession(xsession);
-    }
-    tomaDatos();
-  }, []);
-
-  useEffect(() => {
-    //console.log("guardamos session: ", session);
-    if (session) {
-      setUsuario(session);
-      setIsAuthenticated(true);
-      setDataSession(session);
-    }
-  }, [session]);
-
-  return (
-    <View
-      style={{
-        paddingTop: insets.top, // Aplica el margen superior
-        paddingBottom: insets.bottom, // Aplica el margen inferior
-        backgroundColor: "rgba(0, 72, 142,0.5)",
-      }}
-      className={`flex-1 justify-center items-center bg-${
-        usuario && usuario.colorScheme
-      }-back`}
-    >
-      {/* Contenido superpuesto */}
-
-      <BorderMenu navigation={navigation} />
-
-      {mensaje && <NotificationArea notificacion={mensaje}></NotificationArea>}
-    </View>
-
-    // </ImageBackground>
-  );
-}
-
-function BorderMenu({ navigation }) {
+  const { isAuthenticated, usuario } = useContext(AuthContext);
   const [menuVisible, setMenuVisible] = useState(false);
-  const translateX = useState(new Animated.Value(-width / 2))[0]; // Inicia fuera de la vista
-  const opacity = useState(new Animated.Value(0))[0]; // Inicia completamente invisible
+  const translateX = useRef(new Animated.Value(-width * 0.75)).current; // Menú ocupa 75% del ancho
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, gestureState) =>
+        Math.abs(gestureState.dx) > 20, // Detectar deslizamiento horizontal
+      onPanResponderMove: (_, gestureState) => {
+        if (!menuVisible && gestureState.dx > 0) {
+          // Mostrar menú si está cerrado y desliza a la derecha
+          translateX.setValue(Math.min(-width * 0.75 + gestureState.dx, 0));
+        } else if (menuVisible && gestureState.dx < 0) {
+          // Ocultar menú si está abierto y desliza a la izquierda
+          translateX.setValue(Math.max(gestureState.dx, -width * 0.75));
+        }
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dx > 50) {
+          toggleMenu(true); // Abrir el menú
+        } else if (gestureState.dx < -50) {
+          toggleMenu(false); // Cerrar el menú
+        } else {
+          toggleMenu(menuVisible); // Volver al estado original
+        }
+      },
+    })
+  ).current;
 
-  const toggleMenu = () => {
-    if (!menuVisible) {
-      // Mostrar el menú
-      Animated.parallel([
-        Animated.timing(translateX, {
-          toValue: 0, // Mover dentro de la vista
-          duration: 300,
-          useNativeDriver: true,
-        }),
-        Animated.timing(opacity, {
-          toValue: 1, // Hacerlo visible
-          duration: 300,
-          useNativeDriver: true,
-        }),
-      ]).start();
-    } else {
-      // Ocultar el menú
-      Animated.parallel([
-        Animated.timing(translateX, {
-          toValue: -width / 2, // Mover fuera de la vista
-          duration: 300,
-          useNativeDriver: true,
-        }),
-        Animated.timing(opacity, {
-          toValue: 0, // Hacerlo invisible
-          duration: 300,
-          useNativeDriver: true,
-        }),
-      ]).start();
-    }
-    setMenuVisible(!menuVisible);
+  const toggleMenu = (show) => {
+    Animated.timing(translateX, {
+      toValue: show ? 0 : -width * 0.75,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => setMenuVisible(show));
   };
 
   return (
-    <View
-      style={[
-        styles.containerMenu,
-        //menuVisible ? { zIndex: 100 } : { zIndex: -1, height: 0, width: 0 },
-      ]}
-    >
-      {/* Botón del menú - visible solo cuando el menú está cerrado */}
-      {!menuVisible && (
-        <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-          <Text style={styles.menuText}>☰</Text>
-        </TouchableOpacity>
-      )}
-
+    <View style={styles.container} {...panResponder.panHandlers}>
       {/* Menú deslizable */}
-      <Animated.View
-        style={[styles.drawer, { transform: [{ translateX }], opacity }]}
-      >
-        <View style={styles.containerTitleView}>
-          <Text style={styles.titleMenu}>Menu</Text>
-        </View>
-        <Text
-          style={[styles.drawerText]}
-          onPress={() => {
-            navigation.navigate("Contacto");
-            toggleMenu(); // Cierra el menú después de navegar
-          }}
-        >
-          Contacto
-        </Text>
-        <View style={styles.divider} />
-        <Text
-          style={styles.drawerText}
-          onPress={() => {
-            navigation.navigate("About");
-            toggleMenu(); // Cierra el menú después de navegar
-          }}
-        >
-          About
-        </Text>
-        <View style={styles.divider} />
-        <Text
-          style={styles.drawerText}
-          onPress={() => {
-            fetchUserData("usuario");
-            toggleMenu(); // Cierra el menú después de navegar
-          }}
-        >
-          Load Data
-        </Text>
-        <View style={styles.divider} />
-        <TouchableOpacity onPress={toggleMenu}>
-          <Text style={styles.drawerText}>Cerrar</Text>
+      <Animated.View style={[styles.menu, { transform: [{ translateX }] }]}>
+        {!isAuthenticated ? (
+          <Text style={styles.menuText}>Menú</Text>
+        ) : (
+          <Text
+            style={[
+              styles.menuText,
+              { borderBottomWidth: 3, borderBottomColor: "white" },
+            ]}
+          >
+            {usuario.name}
+          </Text>
+        )}
+
+        {/* settings*/}
+        {isAuthenticated && (
+          <TouchableOpacity
+            onPress={() => {
+              toggleMenu(false);
+              navigation.navigate("Settings");
+            }}
+          >
+            <Text style={styles.menuItem}>Settings</Text>
+          </TouchableOpacity>
+        )}
+
+        <TouchableOpacity onPress={() => toggleMenu(false)}>
+          <Text style={styles.menuItem}>Cerrar</Text>
         </TouchableOpacity>
       </Animated.View>
+
+      {/* Contenido principal */}
+      <View style={styles.content}>
+        {!menuVisible && (
+          <TouchableOpacity
+            onPress={() => toggleMenu(true)}
+            style={styles.menuButton}
+          >
+            <Text style={styles.menuButtonText}>☰</Text>
+          </TouchableOpacity>
+        )}
+        <Text style={styles.contentText}>Contenido Principal</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  containerMenu: {
+  container: {
+    flex: 1,
+    backgroundColor: "#f0f0f0",
+  },
+  menu: {
     position: "absolute",
     top: 0,
     left: 0,
-    width: "100%",
+    width: width * 0.75,
     height: "100%",
-    zIndex: 100, // Asegura que el menú esté por encima de otros elementos
+    backgroundColor: "#333",
+    padding: 20,
+    zIndex: 10,
+  },
+  menuText: {
+    color: "#fff",
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  menuItem: {
+    color: "#fff",
+    fontSize: 18,
+    marginVertical: 10,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  contentText: {
+    fontSize: 18,
   },
   menuButton: {
     position: "absolute",
-    top: 0,
-    left: 0, // Ícono en la esquina superior izquierda
-    padding: 10,
-    borderRadius: 5,
-    zIndex: 110, // Asegura que el botón esté encima del menú
+    top: 20,
+    left: 20,
+    zIndex: 20,
   },
-  menuText: {
-    color: "white",
-    fontSize: 32,
-    fontWeight: "bold",
-  },
-  drawer: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: width / 2,
-    height: "100%",
-    elevation: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    zIndex: 105,
-    backgroundColor: "rgba(110, 144, 231, 0.8)",
-  },
-  containerTitleView: {
-    backgroundColor: "rgba(60, 108, 232, 0.6)",
-    padding: 15,
-    width: "100%",
-  },
-  titleMenu: {
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  drawerText: {
-    fontSize: 18,
-    marginVertical: 0,
-    paddingHorizontal: 20,
-    color: "#fff",
-    paddingVertical: 15,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: "#fff",
-    marginVertical: 5,
-    width: "100%",
-    alignSelf: "center",
-    marginBottom: 0,
-    marginTop: 0,
+  menuButtonText: {
+    fontSize: 30,
   },
 });
