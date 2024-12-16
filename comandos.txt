@@ -1,0 +1,68 @@
+para configurar los servicios eas 
+    eas build:configure
+
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "ios":{
+        "simulator": true
+      },
+      "android" : {
+        "buildType": "apk"
+      }
+
+
+
+
+para generar una compilacion si no necesitas apk
+    eas build -p android --profile development
+
+para descargar apx desde expo
+    eas login 
+
+para generar  aab 
+    eas build -p android --profile production
+para generar  apk
+    eas build -p android --profile preview
+
+
+
+ejecutar dentro de la carpeta del sdk/bin
+
+para generar keytool 
+    keytool -genkeypair -v -keystore cleverfox.keystore -keyalg RSA -keysize 2048 -validity 10000 -alias cleverfox
+
+ keystore
+ CN=ruben rufino, OU=cleverfox, O=cleverfox,  aires, ST=buenos aires, C=ar
+
+ pass Inti12223906
+
+
+ejecutar dentro del sdk/bin
+
+ java -jar bundletool.jar build-apks \
+  --bundle=myapp.aab \
+  --output=myapp.apks \
+  --ks=my-release-key.keystore \
+  --ks-key-alias=my-key-alias \
+  --key-pass=pass:keypassword \
+  --ks-pass=pass:keystorepassword
+
+  java -jar bundletool.jar build-apks --bundle=cleverfox.aab --output=cleverfox.apks --mode=universal --ks=cleverfox.keystore --ks-pass=pass:Inti12223906 --ks-key-alias=cleverfox --key-pass=pass:Inti12223906
+
+
+Conecta tu dispositivo Android al ordenador con el modo depuración activado y ejecuta:
+java -jar bundletool.jar install-apks --apks=cleverfox.apks
+
+O
+
+Descarga la aplicación "SAI" (Split APKs Installer)
+Transfiere el archivo .apks a tu dispositivo Android.
+Abre SAI y selecciona el archivo .apks:
+
+
+permisos  "USE_BIOMETRIC", "USE_FINGERPRINT"
+        
