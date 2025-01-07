@@ -52,7 +52,7 @@ export async function fetchUserData(key) {
     //console.log("Datos del usuario:", session);
     return session;
   } else {
-    console.log("No se encontraron datos.");
+    Alert.alert("No se encontraron datos.");
     return null;
   }
 }
