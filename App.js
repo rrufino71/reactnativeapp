@@ -15,7 +15,7 @@ import AboutScreen from "./screens/AboutScreen";
 import MainScreen from "./screens/MainScreen";
 import ContactoScreen from "./screens/ContactoScreen";
 import SettingsScreen from "./screens/SettingsScreen";
-//import ProfileScreen from "./screens/ProfileScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import HuellaScreen from "./screens/HuellaScreen";
 import CustomTabBar from "./components/CustomBar";
 import CustomStatusBar from "./components/CustomStatusBar";
@@ -63,16 +63,18 @@ export default function App() {
           PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         ]);
 
-        Alert.alert("Permissions granted:", granted);
+        //Alert.alert("Permissions granted:", granted);
       } catch (err) {
-        Alert.alert(err);
+        //Alert.alert(err);
+        //console.log(err);
       }
     }
   }
 
   useEffect(() => {
     requestPermissions();
-  });
+    //console.log("android");
+  }, []);
 
   return (
     <AuthProvider>
@@ -121,11 +123,11 @@ export default function App() {
               component={RegisterScreen}
               options={{ headerShown: false, gestureEnabled: true }}
             />
-            {/* <Stack.Screen
+            <Stack.Screen
               name="Profile"
               component={ProfileScreen}
               options={{ headerShown: false, gestureEnabled: true }}
-            /> */}
+            />
           </Stack.Navigator>
           {!isKeyboardVisible && (
             <CustomTabBar isKeyboardVisible={isKeyboardVisible} />
@@ -134,65 +136,4 @@ export default function App() {
       </SafeAreaProvider>
     </AuthProvider>
   );
-  {
-    /* <AuthProvider>
-     <SafeAreaProvider>
-        <StatusBar
-          style="dark"
-          hidden={false}
-          backgroundColor="white"
-          translucent={true}
-        />
-
-        <NavigationContainer>
-          <CustomStatusBar />
-          <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{ headerShown: false, gestureEnabled: true }}
-            />
-            <Stack.Screen
-              name="Huella"
-              component={HuellaScreen}
-              options={{ headerShown: false, gestureEnabled: true }}
-            />
-            <Stack.Screen
-              name="Home"
-              component={MainScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="About"
-              component={AboutScreen}
-              options={{ headerShown: false, gestureEnabled: true }}
-            />
-            <Stack.Screen
-              name="Contacto"
-              component={ContactoScreen}
-              options={{ headerShown: false, gestureEnabled: true }}
-            />
-            <Stack.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{ headerShown: false, gestureEnabled: true }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={RegisterScreen}
-              options={{ headerShown: false, gestureEnabled: true }}
-            />
-            <Stack.Screen
-              name="Profile"
-              component={ProfileScreen}
-              options={{ headerShown: false, gestureEnabled: true }}
-            />
-          </Stack.Navigator>
-          {!isKeyboardVisible && (
-            <CustomTabBar isKeyboardVisible={isKeyboardVisible} />
-          )}
-        </NavigationContainer>
-      </SafeAreaProvider> 
-      </AuthProvider>*/
-  }
 }

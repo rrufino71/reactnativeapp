@@ -6,7 +6,7 @@ export async function storeSecureData(key, value) {
     await SecureStore.setItemAsync(key, value);
     //Alert.alert("Dato almacenado de manera segura");
   } catch (error) {
-    Alert.alert("Error al almacenar el dato", error);
+    //Alert.alert("Error al almacenar el dato", error);
   }
 }
 
@@ -17,7 +17,7 @@ export async function getSecureData(key) {
       //Alert.alert("Data recuperada:", data);
       return data;
     } else {
-      Alert.alert("No se encontró el dato");
+      //Alert.alert("No se encontró el dato");
     }
   } catch (error) {
     Alert.alert("Error al recuperar el dato", error);
